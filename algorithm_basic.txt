@@ -1,0 +1,23 @@
+통합 헤더 : <bits/stdc++.h>
+
+c++에서 사용되는 헤더
+<bitset>
+<iostream>
+<algorithm>
+<string>
+<string.h>
+<math.h>
+<time.h>
+<stdlib.h>
+<vector>
+<list>
+<map>
+<queue>
+<stack>
+
+<iterator>
+
+main에 들어갈 코드
+using namespace std;
+ios::sync_with_stdio(0);
+cin.tie(0);
