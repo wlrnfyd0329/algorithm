@@ -1,12 +1,16 @@
 #include <iostream>
-#include <deque>
+#include <algorithm>
+#include <vector>
+#include <queue>
 
 using namespace std;
 
+queue<int> q, q1;
+
 int main() {
-    deque<int> d;
-    d.push_back(1);
-    d.push_back(2);
-    d[0] = 3;
-    cout << d[0] << d[1];
-}
+    q.push(1);
+    q.push(2);
+    q1 = q;
+    q.pop();
+    cout << q.size() << " " << q1.size();
+}   
