@@ -5,12 +5,8 @@
 
 using namespace std;
 
-queue<int> q, q1;
+vector<int> v = {1, 2, 3, 4};
 
 int main() {
-    q.push(1);
-    q.push(2);
-    q1 = q;
-    q.pop();
-    cout << q.size() << " " << q1.size();
+    cout << *v.begin() << " " << *v.end();
 }   
