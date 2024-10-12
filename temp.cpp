@@ -5,8 +5,8 @@
 
 using namespace std;
 
-vector<int> v = {1, 2, 3, 4};
+vector<pair<int, int>> v[4];
 
 int main() {
-    cout << *v.begin() << " " << *v.end();
+    cout << v[1].size();
 }   
