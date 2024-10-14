@@ -8,9 +8,8 @@ using namespace std;
 
 int n, m, Q, st, maxid;
 vector<pair<int, int>> v[2005];
-int tv[2005][2005];
 int dist[2005];
-vector<int> product[30005];
+bool pro_id[30005];
 
 struct cmp
 {
@@ -54,6 +53,7 @@ void construct()
 
 void create(int id, int rev, int dest)
 {
+    pro_id[id] = true;
     if (dist[dest] == -1)
     {
         optim.push({{id, rev, dest}, -1});
@@ -64,23 +64,21 @@ void create(int id, int rev, int dest)
     }
 }
 
-void cancel(int id)
+int sell()
 {
-    priority_queue<pair<tuple<int, int, int>, int>, vector<pair<tuple<int, int, int>, int>>, cmp> toptim;
     while (!optim.empty())
     {
         auto k = optim.top();
-        optim.pop();
-        if (get<0>(k.first) == id)
-            continue;
-        toptim.push(k);
+        if (!pro_id[get<0>(k.first)])
+        {
+            optim.pop();
+        }
+        else
+        {
+            break;
+        }
     }
-    optim = toptim;
-}
-
-int sell()
-{
-    if (optim.size() == 0)
+    if (optim.empty())
         return -1;
     auto id = optim.top();
     if (id.second < 0)
@@ -97,17 +95,23 @@ void change_start(int s)
     while (!optim.empty())
     {
         auto k = optim.top();
+        optim.pop();
+        if (pro_id[get<0>(k.first)])
+            toptim.push(k);
+    }
+    while (!toptim.empty())
+    {
+        auto k = toptim.top();
         if (dist[get<2>(k.first)] == -1)
         {
-            toptim.push({{get<0>(k.first), get<1>(k.first), get<2>(k.first)}, -1});
+            optim.push({{get<0>(k.first), get<1>(k.first), get<2>(k.first)}, -1});
         }
         else
         {
-            toptim.push({{get<0>(k.first), get<1>(k.first), get<2>(k.first)}, get<1>(k.first) - dist[get<2>(k.first)]});
+            optim.push({{get<0>(k.first), get<1>(k.first), get<2>(k.first)}, get<1>(k.first) - dist[get<2>(k.first)]});
         }
-        optim.pop();
+        toptim.pop();
     }
-    optim = toptim;
 }
 
 int main()
@@ -122,30 +126,14 @@ int main()
         if (tmp == 100)
         {
             cin >> n >> m;
-            fill(tv[0], tv[n], -1);
             for (int j = 0; j < m; j++)
             {
                 int a, b, c;
                 cin >> a >> b >> c;
                 if (a == b)
                     continue;
-                if (tv[a][b] == -1)
-                    tv[a][b] = c;
-                else
-                    tv[a][b] = min(tv[a][b], c);
-                if (tv[b][a] == -1)
-                    tv[b][a] = c;
-                else
-                    tv[b][a] = min(tv[b][a], c);
-            }
-            for (int j = 0; j < n; j++)
-            {
-                for (int k = 0; k < n; k++)
-                {
-                    if (tv[j][k] == -1)
-                        continue;
-                    v[j].push_back({tv[j][k], k});
-                }
+                v[a].push_back({c, b});
+                v[b].push_back({c, a});
             }
             construct();
         }
@@ -159,7 +147,7 @@ int main()
         {
             int id;
             cin >> id;
-            cancel(id);
+            pro_id[id] = false;
         }
         else if (tmp == 400)
         {
