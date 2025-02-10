@@ -46,44 +46,134 @@ void moveShark() {
         if (arr[cur.first][cur.second].z == 0) continue;
         int nx = cur.first;
         int ny = cur.second;
-        if (arr[cur.first][cur.second].s / c == 0) {
-            nx += dx[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;
-            ny += dy[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;
-        }
-        else {
-            if (arr[cur.first][cur.second].s / c % 2 == 0) { // 짝수
-                nx += dx[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;
-                ny += dy[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;
+        int move = arr[cur.first][cur.second].s; 
+        switch (arr[cur.first][cur.second].d)
+        {
+        case 1: // 위
+            if (move < nx)
+            {
+                nx -= move;
             }
-            else { // 홀수
-                nx -= dx[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;
-                ny -= dy[arr[cur.first][cur.second].d] * arr[cur.first][cur.second].s;  
-            }
-        }
-        for (int i = 0; i < arr[cur.first][cur.second].s; i++) {
-            nx += dx[arr[cur.first][cur.second].d];
-            ny += dy[arr[cur.first][cur.second].d];
-            if (nx < 1 || nx > r) {
-                nx -= dx[arr[cur.first][cur.second].d] * 2;
-                ny -= dy[arr[cur.first][cur.second].d] * 2;
-                if (arr[cur.first][cur.second].d == 1) {
-                    arr[cur.first][cur.second].d = 2;
+            else
+            {
+                move -= nx - 1;
+                if (move % (r - 1) == 0) {
+                    if (move / (r - 1) % 2 != 0) { // 0으로 나눠떨어지는데 홀수 => 1, 2, 3 => i + 1
+                        nx = r;
+                        arr[cur.first][cur.second].d = 2;
+                    }
+                    else { // 짝수 => 3, 2, 1 => r - i
+                        nx = 1;
+                    }
                 }
                 else {
-                    arr[cur.first][cur.second].d = 1;
+                    if (move / (r - 1) % 2 == 0) { // 0으로 안나눠떨어지는데 짝수 => 1, 2, 3 => i + 1
+                        nx = move % (r - 1) + 1;
+                        arr[cur.first][cur.second].d = 2;
+                    }
+                    else { // 홀수 => 3, 2, 1 => r - i
+                        nx = r - move % (r - 1);
+                    }
                 }
             }
-            if (ny < 1 || ny > c) {
-                nx -= dx[arr[cur.first][cur.second].d] * 2;
-                ny -= dy[arr[cur.first][cur.second].d] * 2;
-                if (arr[cur.first][cur.second].d == 3) {
-                    arr[cur.first][cur.second].d = 4;
+            break;
+        case 2: // 아래
+            if (move < r - nx + 1)
+            {
+                nx += move;
+            }
+            else
+            {
+                move -= r - nx;
+                if (move % (r - 1) == 0) {
+                    if (move / (r - 1) % 2 != 0) { // 0으로 나눠떨어지는데 홀수 => 3, 2, 1 => r - i
+                        nx = 1;
+                        arr[cur.first][cur.second].d = 1;
+                    }
+                    else { // 짝수 => 1, 2, 3 => i + 1
+                        nx = r;
+                    }
                 }
                 else {
-                    arr[cur.first][cur.second].d = 3;
+                    if (move / (r - 1) % 2 == 0) { // 0으로 안나눠떨어지는데 짝수 => 3, 2, 1 => r - i
+                        nx = r - move % (r - 1);
+                        arr[cur.first][cur.second].d = 1;
+                    }
+                    else { // 홀수 => 1, 2, 3 => i + 1
+                        nx = move % (r - 1) + 1;
+                    }
                 }
             }
-        } 
+            break;
+        case 3: // 오른쪽
+            if (move < c - ny + 1)
+            {
+                ny += move;
+            }
+            else
+            {
+                move -= c - ny;
+                if (move % (c - 1) == 0)
+                {
+                    if (move / (c - 1) % 2 != 0)
+                    { // 0으로 나눠떨어지는데 홀수 => 3, 2, 1 => r - i
+                        ny = 1;
+                        arr[cur.first][cur.second].d = 4;
+                    }
+                    else
+                    { // 짝수 => 1, 2, 3 => i + 1
+                        ny = c;
+                    }
+                }
+                else
+                {
+                    if (move / (c - 1) % 2 == 0)
+                    { // 0으로 안나눠떨어지는데 짝수 => 3, 2, 1 => r - i
+                        ny = c - move % (c - 1);
+                        arr[cur.first][cur.second].d = 4;
+                    }
+                    else
+                    { // 홀수 => 1, 2, 3 => i + 1
+                        ny = move % (c - 1) + 1;
+                    }
+                }
+            }
+            break;
+        case 4: // 왼쪽
+            if (move < ny)
+            {
+                ny -= move;
+            }
+            else
+            {
+                move -= ny - 1;
+                if (move % (c - 1) == 0)
+                {
+                    if (move / (c - 1) % 2 != 0)
+                    { // 0으로 나눠떨어지는데 홀수 => 1, 2, 3 => i + 1
+                        ny = c;
+                        arr[cur.first][cur.second].d = 3;
+                    }
+                    else
+                    { // 짝수 => 3, 2, 1 => r - i
+                        ny = 1;
+                    }
+                }
+                else
+                {
+                    if (move / (c - 1) % 2 == 0)
+                    { // 0으로 안나눠떨어지는데 짝수 => 1, 2, 3 => i + 1
+                        ny = move % (c - 1) + 1;
+                        arr[cur.first][cur.second].d = 3;
+                    }
+                    else
+                    { // 홀수 => 3, 2, 1 => r - i
+                        ny = c - move % (c - 1);
+                    }
+                }
+            }
+            break;
+        }
         if (new_shark_arr[nx][ny].z > 0) {
             if(new_shark_arr[nx][ny].z < arr[cur.first][cur.second].z) {
                 new_shark_arr[nx][ny] = arr[cur.first][cur.second];
