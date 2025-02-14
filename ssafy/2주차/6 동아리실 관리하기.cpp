@@ -44,7 +44,7 @@ int main() {
                     int check[16] = {0, };
                     //cout << "last :" << bitset<4> (j) << " now : ";
                     for (int k = 1; k < 16; k++) {
-                        if ((k & j) > 0) { // 그걸로 만들 수 있는 조합합
+                        if ((k & j) > 0) { // 그걸로 만들 수 있는 조합
                             int num = trans(s[i-1]) | k;
                             check[num] = 1;
                         }
