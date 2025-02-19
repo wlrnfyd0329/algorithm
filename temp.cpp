@@ -11,12 +11,6 @@ set<int> s;
 
 
 int main() {
-    cout << v[1].size();
-    s.insert(1);
-    s.insert(50);
-    s.insert(3);
-    s.clear();
-    for(auto k : s) {
-        cout << k <<" ";
-    }
+    short tmp = 1 << 15;
+    cout << --tmp;
 }   
