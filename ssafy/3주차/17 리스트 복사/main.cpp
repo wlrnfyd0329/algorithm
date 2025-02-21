@@ -119,7 +119,7 @@ static bool run()
 int main()
 {
     setbuf(stdout, NULL);
-    //freopen("sample_input.txt", "r", stdin);
+    freopen("sample_input.txt", "r", stdin);
 
     int T, MARK;
     scanf("%d %d", &T, &MARK);
