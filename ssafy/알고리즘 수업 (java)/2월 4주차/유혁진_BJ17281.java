@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class 유혁진_BJ17281 {
+public class Main {
     static int N;
     static int maxScore = 0;
     static int[][] arr;
