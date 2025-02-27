@@ -1,71 +1,71 @@
-// 세그먼트 트리 할 줄 모르지만 일단 따라 짜보기
-
 #include <iostream>
 #include <vector>
 #include <cmath>
+
 typedef long long ll;
+
 using namespace std;
 
-vector<ll> segTree;
-vector<ll> numV;
+int n, m, k;
+vector<ll> segtree;
+vector<ll> v;
 
-int N, M, K;
+ll init(int node, int start, int end) {
+    if (start == end) {
+        return segtree[node] = v[start];
+    }
 
-ll init(int start, int end, int node) {
-    if (start == end)
-        return segTree[node] = numV[start];
-    int mid = (start + end) >> 1;
-    return segTree[node] = init(start, mid, node << 1) + init(mid + 1, end, (node << 1) + 1);
+    int mid = (start + end) / 2;
+
+    return segtree[node] = init(node * 2, start, mid) + init(node * 2 + 1, mid + 1, end);
 }
 
-ll sum(int start, int end, int left, int right, int node) {
-    if (left > end || right < start)
-        return 0;
-    if (left <= start && right >= end)
-        return segTree[node];
-    int mid = (start + end) >> 1;
-    return sum(start, mid, left, right, node << 1) + sum(mid + 1, end, left, right, (node << 1) + 1);
+ll sum(int node, int left, int right, int start, int end) {
+    if (left > end || right < start) return 0;
+    if (left <= start && end <= right) return segtree[node];
+    int mid = (start + end) / 2;
+    return sum(node * 2, left, right, start, mid) + sum(node * 2 + 1, left, right, mid + 1, end);
 }
 
-void update(int start, int end, int target, ll diff, int node)
-{
-    if (target > end || target < start)
-        return;
-    segTree[node] += diff;
-    if (start == end)
-        return;
-    int mid = (start + end) >> 1;
-    update(start, mid, target, diff, node << 1);
-    update(mid + 1, end, target, diff, (node << 1) + 1);
+void update(int node, int start, int end, int index, ll diff) {
+    if (index < start || index > end) return;
+    segtree[node] += diff;
+
+    if (start != end) {
+        int mid = (start + end) / 2;
+        update(node * 2, start, mid, index, diff);
+        update(node * 2 + 1, mid + 1, end, index ,diff);
+    }
 }
 
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    cin >> N >> M >> K;
-    int h = ceil(log2(N));
-    int treeSize = 1 << (h+1);
-    segTree = vector<ll>(treeSize);
-    numV.push_back(0);
-    for(int i = 0; i < N; i++) {
-        ll num;
-        cin >> num;
-        numV.push_back(num);
+    cin >> n >> m >> k;
+
+    int height = ceil(log2(n));
+    int tree_size = 1 << (height + 1);
+    segtree = vector<ll>(tree_size);
+    v.push_back(0);
+    for(int i = 0; i < n; i++) {
+        ll tmp;
+        cin >> tmp;
+        v.push_back(tmp);
     }
-    init(1, N, 1);
-    for (int i = 0; i < M + K; ++i)
-    {
+
+    init(1, 1, n);
+
+    for(int i = 0; i < m + k; i++) {
         ll a, b, c;
         cin >> a >> b >> c;
-        if (a == 1)
-        {
-            ll diff = c - numV[b];
-            numV[b] = c;
-            update(1, N, b, diff, 1);
+        if (a == 1) {
+            ll diff = c - v[b];
+            v[b] = c;
+            update(1, 1, n, b, diff);
         }
-        else
-        {
-            cout << sum(1, N, b, c, 1) << "\n";
+        else {
+            cout << sum(1, b, c, 1, n) << endl;
         }
     }
+
 }
