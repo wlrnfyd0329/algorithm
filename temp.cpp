@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <set>
+#include <cmath>
 
 using namespace std;
 
@@ -12,5 +13,8 @@ set<int> s;
 
 int main() {
     short tmp = 1 << 15;
-    cout << --tmp;
+    cout << --tmp << "\n";
+
+    cout << ceil(log2(1000000));
+    cout << (1 << 21);
 }   

@@ -22,7 +22,7 @@ void dfs(int depth) {
 
 void update_lazy(int node, int start, int end) {
     if (lazy[node] != 0) {
-        tree[node] += lazy[node];
+        tree[node] += (end - start + 1) * lazy[node];
 
         if (start != end) {
             lazy[node * 2] += lazy[node];
@@ -38,7 +38,7 @@ void update_tree(int node, int start, int end, int left, int right, int diff) {
 
     if (start > right || end < left) return;
     if (left <= start && end <= right) {
-        tree[node] += diff;
+        tree[node] += (end - start + 1) * diff;
         if (start != end) {
             lazy[node * 2] += diff;
             lazy[node * 2 + 1] += diff;
@@ -65,6 +65,7 @@ void query(int node, int start, int end, int index) {
     int mid = (start + end) >> 1;
     query(node * 2, start, mid, index);
     query(node * 2 + 1, mid + 1, end, index);
+    tree[node] = tree[node * 2] + tree[node * 2 + 1];
 }
 
 int main() {
