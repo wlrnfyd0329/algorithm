@@ -10,7 +10,8 @@ using namespace std;
 struct Player {
 	int ID;
 	int Ability;
-
+    bool isExist = true;
+    Player(int id, int ability) : ID(id), Ability(ability) {}
 	bool operator<(const Player& other) const {
 		if (Ability == other.Ability) {
 			return ID < other.ID;
@@ -20,33 +21,37 @@ struct Player {
 };
 vector<set<Player>> v;
 
+vector<Player> user;
+queue<Player> info_store;
+vector<Player> info;
 
 int main() {
-    short tmp = 1 << 15;
-    cout << --tmp << "\n";
+    info.push_back(Player(1, 1));
+    cout << info[0].isExist << " " << &info[0] << "\n";
+    info_store.push(info[0]);
+    info[0].isExist = false;
+    cout << info[0].isExist << " " << &info[0] << "\n";
 
-    cout << ceil(log2(1000000));
-    cout << (1 << 21) << "\n";
+    cout << info_store.front().isExist << " " << &info_store.front() << "\n";
+    user.push_back(info_store.front());
+    cout << user[0].isExist << " " << &user[0] << "\n";
+    
 
     set<Player> s;
-    cout << s.size() << "\n";
+
     s.insert({3, 8});
     s.insert({4, 7});
     s.insert({2, 6});
     s.insert({1, 5});
     s.insert({9, 5});
 
-    for(auto k : s) {
-        cout << k.ID << " " << k.Ability << "\n";
+    cout << &s << "\n";
+    for(auto iter = s.begin(); iter != s.end(); iter++) {
+        cout << &*iter << "\n";
     }
     cout << "\n";
 
     Player temp = *s.begin();
-    s.erase(s.begin());
 
-    for(auto k : s) {
-        cout << k.ID << " " << k.Ability << "\n";
-    }
-    cout << "\n";
-    cout << temp.ID << " " << temp.Ability;
+    cout << &temp << " " << &*s.begin();
 }   
