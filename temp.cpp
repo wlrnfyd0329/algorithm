@@ -25,6 +25,14 @@ vector<Player> user;
 queue<Player> info_store;
 vector<Player> info;
 
+struct cmp {
+    bool operator() (const int* a, const int* b) const {
+        return *a < *b;
+    }
+};
+
+priority_queue<int*, vector<int*>, cmp> pq;
+
 int main() {
     info.push_back(Player(1, 1));
     cout << info[0].isExist << " " << &info[0] << "\n";
@@ -41,6 +49,7 @@ int main() {
 
     s.insert({3, 8});
     s.insert({4, 7});
+
     s.insert({2, 6});
     s.insert({1, 5});
     s.insert({9, 5});
@@ -54,4 +63,18 @@ int main() {
     Player temp = *s.begin();
 
     cout << &temp << " " << &*s.begin();
+    
+    int a = 1;
+    int b = 10;
+    int c = 7;
+    pq.push(&a);
+    pq.push(&b);
+    pq.push(&c);
+    cout << "pq : " << endl;
+    cout << *pq.top() << " " << pq.size() << endl;
+    *pq.top() /= 2;
+    pq.push(pq.top());
+    cout << pq.size() << endl;
+    cout << *pq.top() << " " << b << pq.size();
+    pq.pop();
 }   
