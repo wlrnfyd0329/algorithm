@@ -20,5 +20,8 @@ void combination(int now, int cnt, int status) {
 }
 
 int main() {
-    combination(0, 0, 0);
+    int lf = 1;
+    long long rg = (1 << 31) - 1;
+    int mid = (lf + rg) >> 1;
+    cout << mid;
 }   
