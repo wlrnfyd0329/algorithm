@@ -18,18 +18,18 @@ int main() {
 
     sort(v.begin(), v.end());
 
-    int lf = 1, rg = 1'000'000'000;
+    int lf = 0, rg = 1'000'000'000;
     while(lf <= rg) {
         int mid = (lf + rg) >> 1;
-        int cnt = 0;
+        int cnt = 1;
         int st = v[0];
-        for(int i = 1; i < v.size(); i++) {
+        for(int i = 1; i < n; i++) {
             if (v[i] - st >= mid) {
                 cnt++;
                 st = v[i];
             }
         }
-        if (cnt <= c) {
+        if (cnt < c) {
             rg = mid - 1;
         }
         else {
