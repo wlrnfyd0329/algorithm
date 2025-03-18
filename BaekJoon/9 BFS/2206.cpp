@@ -1,3 +1,5 @@
+// bfs는 항상 최단거리로 이동하기 때문에 vis가 있다는 건 나중에 도착했다는 의미다.
+
 #include <iostream>
 #include <queue>
 #define X first
