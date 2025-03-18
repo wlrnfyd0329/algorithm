@@ -1,3 +1,5 @@
+// bfs는 항상 vis 안되어 있으면 최단이다.
+
 #include <iostream>
 #include <queue>
 #define X first
@@ -9,11 +11,12 @@ int n, m, k;
 struct Info {
     int broken;
     bool isNoon;
+    int dist;
     int x;
     int y;
 };
 int board[1005][1005];
-int vis[15][1005][1005];
+bool vis[15][1005][1005];
 
 int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
@@ -31,50 +34,37 @@ int main() {
     }
 
     queue<Info> q;
-    q.push({0, true, 1, 1});
-    vis[0][1][1] = 1;
+    q.push({0, true, 1, 1, 1});
+    vis[0][1][1] = true;
 
     while(!q.empty()) {
         auto cur = q.front(); q.pop();
+        if (cur.x == n && cur.y == m) {
+            cout << cur.dist;
+            return 0;
+        }
         for(int dir = 0; dir < 4; dir++) {
             int nx = cur.x + dx[dir];
             int ny = cur.y + dy[dir];
             if (nx <= 0 || nx > n || ny <= 0 || ny > m) continue;
             if (board[nx][ny] == 1) {
                 if (cur.broken == k) continue;
+                if (vis[cur.broken + 1][nx][ny]) continue;
                 if (cur.isNoon) {
-                    if (vis[cur.broken + 1][nx][ny] == 0 || vis[cur.broken + 1][nx][ny] > vis[cur.broken][cur.x][cur.y] + 1) {
-                        vis[cur.broken + 1][nx][ny] = vis[cur.broken][cur.x][cur.y] + 1;
-                        q.push({cur.broken + 1, !cur.isNoon, nx, ny});
-                    }
+                    vis[cur.broken + 1][nx][ny] = true;
+                    q.push({cur.broken + 1, !cur.isNoon, cur.dist + 1, nx, ny});
                 }
                 else {
-                    if (vis[cur.broken + 1][nx][ny] == 0 || vis[cur.broken + 1][nx][ny] > vis[cur.broken][cur.x][cur.y] + 2) {
-                        vis[cur.broken + 1][nx][ny] = vis[cur.broken][cur.x][cur.y] + 2;
-                        q.push({cur.broken + 1, cur.isNoon, nx, ny});
-                    }
+                    q.push({cur.broken, !cur.isNoon, cur.dist + 1, cur.x, cur.y});
                 }
             }
             else {
-                if (vis[cur.broken][nx][ny] == 0 || vis[cur.broken][nx][ny] > vis[cur.broken][cur.x][cur.y] + 1) {
-                    vis[cur.broken][nx][ny] = vis[cur.broken][cur.x][cur.y] + 1;
-                    q.push({cur.broken, !cur.isNoon, nx, ny});
-                }
+                if (vis[cur.broken][nx][ny]) continue;
+                vis[cur.broken][nx][ny] = true;
+                q.push({cur.broken, !cur.isNoon, cur.dist + 1, nx, ny});
             }
         }
     }
 
-    int cnt = 1234567891;
-    for(int i = 0; i <= k; i++) {
-        if (vis[i][n][m] == 0) continue;
-        if (cnt > vis[i][n][m]) {
-            cnt = vis[i][n][m];
-        }
-    }
-    if (cnt == 1234567891) {
-        cout << -1;
-    }
-    else {
-        cout << cnt;
-    }
+    cout << -1;
 }

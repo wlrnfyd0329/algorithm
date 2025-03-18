@@ -46,7 +46,7 @@ int main() {
             if (vis[cur.broken][nx][ny] > 0) continue;
             if (board[nx][ny] == 1) {
                 if (cur.broken == k) continue;
-                if (vis[cur.broken + 1][nx][ny] == 0 || vis[cur.broken + 1][nx][ny] > vis[cur.broken][cur.x][cur.y] + 1) {
+                if (vis[cur.broken + 1][nx][ny] == 0) {
                     vis[cur.broken + 1][nx][ny] = vis[cur.broken][cur.x][cur.y] + 1;
                     q.push({cur.broken + 1, nx, ny});
                 }

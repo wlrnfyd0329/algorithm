@@ -40,6 +40,10 @@ int main()
     {
         auto cur = q.front();
         q.pop();
+        if (cur.Y.X == n && cur.Y.Y == m) {
+            cout << vis[cur.X][cur.Y.X][cur.Y.Y];
+            return 0;
+        }
         for (int dir = 0; dir < 4; dir++)
         {
             int nx = cur.Y.X + dx[dir];
@@ -52,32 +56,18 @@ int main()
             {
                 if (cur.X == 1)
                     continue;
-                if (vis[1][nx][ny] == 0 || vis[1][nx][ny] > vis[0][nx][ny] + 1)
+                if (vis[1][nx][ny] == 0)
                 {
                     vis[1][nx][ny] = vis[0][cur.Y.X][cur.Y.Y] + 1;
                     q.push({1, {nx, ny}});
-                    continue;
                 }
             }
-            vis[cur.X][nx][ny] = vis[cur.X][cur.Y.X][cur.Y.Y] + 1;
-            q.push({cur.X, {nx, ny}});
+            else {
+                vis[cur.X][nx][ny] = vis[cur.X][cur.Y.X][cur.Y.Y] + 1;
+                q.push({cur.X, {nx, ny}});
+            }
         }
     }
 
-    if (vis[0][n][m] != 0 && vis[1][n][m] != 0)
-    {
-        cout << min(vis[0][n][m], vis[1][n][m]);
-    }
-    else if (vis[0][n][m] != 0)
-    {
-        cout << vis[0][n][m];
-    }
-    else if (vis[1][n][m] != 0)
-    {
-        cout << vis[1][n][m];
-    }
-    else
-    {
-        cout << -1;
-    }
+    cout << -1;
 }
