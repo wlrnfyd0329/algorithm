@@ -25,17 +25,17 @@ int main() {
  
     for(int i = 1; i <= n; i++) city[i][i] = 0; // 같은 자리면 0으로 만들어주기
 
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= n; j++) {
-            for (int k = 1; k <= n; k++) {
-                int fp = city[j][i];
-                int sp = city[i][k];
+    for(int k = 1; k <= n; k++) {
+        for(int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                int fp = city[i][k];
+                int sp = city[k][j];
                 if (fp == -1 || sp == -1) continue;
-                if (city[j][k] == -1) {
-                    city[j][k] = fp+sp;
+                if (city[i][j] == -1) {
+                    city[i][j] = fp+sp;
                 }
                 else {
-                    city[j][k] = min(city[j][k], fp + sp);
+                    city[i][j] = min(city[i][j], fp + sp);
                 }
             }
         }
