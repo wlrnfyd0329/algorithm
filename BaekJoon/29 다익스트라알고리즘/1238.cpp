@@ -30,11 +30,11 @@ int main() {
 
     while(!pq.empty()) {
         auto cur = pq.top(); pq.pop();
-        if (comed[cur.second] < cur.first) continue;
+        if (comed[cur.second] != cur.first) continue;
         for(auto k : come[cur.second]) {
             if (comed[k.second] <= k.first + comed[cur.second]) continue;
             comed[k.second] = k.first + comed[cur.second];
-            pq.push(k);
+            pq.push({comed[k.second], k.second});
         }
     }
 
@@ -45,14 +45,14 @@ int main() {
     {
         auto cur = pq.top();
         pq.pop();
-        if (god[cur.second] < cur.first)
+        if (god[cur.second] != cur.first)
             continue;
         for (auto k : go[cur.second])
         {
             if (god[k.second] <= k.first + god[cur.second])
                 continue;
             god[k.second] = k.first + god[cur.second];
-            pq.push(k);
+            pq.push({god[k.second], k.second});
         }
     }
 

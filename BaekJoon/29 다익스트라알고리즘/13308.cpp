@@ -37,7 +37,7 @@ ll dijkstra() {
 
         if (now.city == n) return dist[n][now.cost];
 
-        if (dist[now.city][now.cost] < now.value) continue;
+        if (dist[now.city][now.cost] != now.value) continue;
         for(auto next : road[now.city]) {
             int low_cost = min(now.cost, fuel[next.en]);
             if (dist[next.en][low_cost] <= dist[now.city][now.cost] + (ll)now.cost * next.len) continue;
