@@ -85,7 +85,7 @@ int main() {
 		if (move(num, d)) {
 			for (int i = 1; i <= L; i++) {
 				for (int j = 1; j <= L; j++) {
-					if (shield[i][j] != 0 && !vis[shield[i][j]]) continue; // 옮길때, tshield에 표시는 안되있지만 살아있는 전사도 잘 표시해야 한다.
+					if (shield[i][j] != 0 && !vis[shield[i][j]] && knight[shield[i][j]].k > health[shield[i][j]]) continue; // 옮길때, tshield에 표시는 안되있지만 살아있는 전사도 잘 표시해야 한다.
 					shield[i][j] = tshield[i][j]; 
 				}
 			}
