@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class 유혁진_BJ2961 {
+public class Main {
 	static boolean[] cook;
 	static int[][] info;
 	static int N;

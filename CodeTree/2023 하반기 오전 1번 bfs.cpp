@@ -73,7 +73,7 @@ void checkKnights(int num, int dir) {
       for (int j = 1; j <= L; j++) {
          int number = knight_map[i][j];
 
-         // 현재 좌표가 0이 아닌데, 방문한 적이 없어?
+         // 현재 좌표가 0이 아닌데, 방문한 적이 없어, 죽어있어
          // 옮길 필요가 없는 애임;
          if (number != 0 && !visit[number] && knights[number].k > 0) continue;
 

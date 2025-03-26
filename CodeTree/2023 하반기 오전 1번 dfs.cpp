@@ -83,12 +83,6 @@ int main() {
 		}
 
 		if (move(num, d)) {
-			for (int i = 1; i <= L; i++) {
-				for (int j = 1; j <= L; j++) {
-					if (shield[i][j] != 0 && !vis[shield[i][j]] && knight[shield[i][j]].k > health[shield[i][j]]) continue; // 옮길때, tshield에 표시는 안되있지만 살아있는 전사도 잘 표시해야 한다.
-					shield[i][j] = tshield[i][j]; 
-				}
-			}
 			for (int i = 1; i <= N; i++) {
 				// 세로로 된 전사를 가로로 옮길 때, 전사 둘이 있는데, 
 				// 둘 중 하나라도 못움직인다면 아예 움직일 수 없으니 체력 감소도 나중에 한번에 적용해야 한다.
@@ -96,6 +90,13 @@ int main() {
 					if (i != num) health[i] += thealth[i];
 					knight[i].r += dx[d];
 					knight[i].c += dy[d];
+				}
+			}
+			for (int i = 1; i <= L; i++) {
+				for (int j = 1; j <= L; j++) {
+					if (shield[i][j] != 0 && !vis[shield[i][j]] && knight[shield[i][j]].k > health[shield[i][j]]) continue; // 옮길때, tshield에 표시는 안되있지만 살아있는 전사도 잘 표시해야 한다.
+					if (tshield[i][j] != 0 && knight[tshield[i][j]].k <= health[tshield[i][j]]) shield[i][j] = 0; 
+					else shield[i][j] = tshield[i][j]; 
 				}
 			}
 		}
