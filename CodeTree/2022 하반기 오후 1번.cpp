@@ -14,6 +14,7 @@ struct Human {
 	int x;
 	int y;
 	int num;
+	bool isArrive = false;
 };
 vector<Human> human;
 queue<Human> arrive;
@@ -41,7 +42,8 @@ int main() {
 	int time = -1;
 	while (cnt != m) {
 		time++;
-		for (int i = cnt; i < human.size(); i++) { // 1번 행동
+		for (int i = 0; i < human.size(); i++) { // 1번 행동
+			if (human[i].isArrive) continue;
 			queue<pair<int, int>> q;
 			int tvis[20][20];
 			for (int i = 0; i < n; i++) {
@@ -59,7 +61,7 @@ int main() {
 					int nx = cur.X + dx[dir];
 					int ny = cur.Y + dy[dir];
 					if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
-					if (vis[0][nx][ny] || vis[i+1][nx][ny] || tvis[nx][ny]) continue;
+					if (vis[0][nx][ny] || vis[i + 1][nx][ny] || tvis[nx][ny]) continue;
 					tvis[nx][ny] = 1;
 					tb[nx][ny] = { cur.X, cur.Y };
 					q.push({ nx, ny });
@@ -69,20 +71,27 @@ int main() {
 			pair<int, int> tcomb = tb[comb[i].X][comb[i].Y];
 			if (tcomb.X == human[i].x && tcomb.Y == human[i].y) {
 				cnt++;
+				human[i].isArrive = true;
 				arrive.push({ comb[i].X, comb[i].Y, human[i].num });
 			}
 			else {
 				while (!(tb[tcomb.X][tcomb.Y].X == human[i].x && tb[tcomb.X][tcomb.Y].Y == human[i].y)) {
 					tcomb = tb[tcomb.X][tcomb.Y];
 				}
-				vis[i+1][tcomb.X][tcomb.Y] = 1;
+				vis[i + 1][tcomb.X][tcomb.Y] = 1;
 				human[i] = { tcomb.X, tcomb.Y, human[i].num };
 			}
+		}
+
+		while (!arrive.empty()) { // 2번 행동
+			auto cur = arrive.front(); arrive.pop();
+			vis[0][cur.x][cur.y] = 1;
 		}
 
 		if (time < m) { // 3번 행동
 			queue<pair<int, int>> q;
 			int tvis[20][20];
+			int targetx = 20, targety = 20, dist = 400;
 			for (int i = 0; i < n; i++) {
 				memset(tvis[i], 0, sizeof(int) * n);
 			}
@@ -90,28 +99,40 @@ int main() {
 			q.push({ comb[time].X, comb[time].Y });
 			while (!q.empty()) {
 				auto cur = q.front(); q.pop();
-				if (board[cur.X][cur.Y] == 1) {
-					human.push_back({ cur.X, cur.Y, time });
-					vis[0][cur.X][cur.Y] = 1;
-					break;
+				if (board[cur.X][cur.Y] == 1) { // 편의점 좌표 체크
+					if (dist > tvis[cur.X][cur.Y]) {
+						dist = tvis[cur.X][cur.Y];
+						targetx = cur.X;
+						targety = cur.Y;
+					}
+					else if (dist == tvis[cur.X][cur.Y]) {
+						if (targetx > cur.X) {
+							targetx = cur.X;
+							targety = cur.Y;
+						}
+						else if (targetx == cur.X) {
+							if (targety > cur.Y) {
+								targety = cur.Y;
+							}
+						}
+					}
+					else {
+						break;
+					}
 				}
 				for (int dir = 0; dir < 4; dir++) {
 					int nx = cur.X + dx[dir];
 					int ny = cur.Y + dy[dir];
 					if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
 					if (vis[0][nx][ny] || tvis[nx][ny]) continue;
-					tvis[nx][ny] = 1;
+					tvis[nx][ny] = tvis[cur.X][cur.Y] + 1;
 					q.push({ nx, ny });
 				}
 			}
-
+			human.push_back({ targetx, targety, time });
+			vis[0][targetx][targety] = 1;
 		}
 
-
-		while (!arrive.empty()) { // 2번 행동
-			auto cur = arrive.front(); arrive.pop();
-			vis[0][cur.x][cur.y] = 1;
-		}
 	}
 	cout << time + 1;
 }
