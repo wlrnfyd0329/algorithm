@@ -2,18 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Solution {
-	public static class Human {
-		int dist;
-		int num;
-		int stair;
-		
-		public Human(int dist, int num, int stair) {
-			this.dist = dist;
-			this.num = num;
-			this.stair = stair;
-		}
-	}
-	
 	static int N;
 	static int[][] board;
 	static ArrayList<int[]> stair;
@@ -34,9 +22,9 @@ public class Solution {
 			stair2 = new PriorityQueue<>();
 			human = new ArrayList<>();
 			time = Integer.MAX_VALUE;
-			for(int i = 1; i <= N; i++) {
+			for(int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
-				for(int j = 1; j <= N; j++) {
+				for(int j = 0; j < N; j++) {
 					board[i][j] = Integer.parseInt(st.nextToken());
 					if (board[i][j] == 1) {
 						human.add(new int[] {i, j});
@@ -47,7 +35,7 @@ public class Solution {
 				}
 			}
 			
-			for(int i = 0; i < (1<<human.size()) - 1; i++) {
+			for(int i = 0; i < (1<<human.size()); i++) {
 				for(int j = 0; j < human.size(); j++) {
 					if ((i & (1 << j)) == 0) stair1.offer(Math.abs(human.get(j)[0] - stair.get(0)[0]) + Math.abs(human.get(j)[1] - stair.get(0)[1]));
 					else stair2.offer(Math.abs(human.get(j)[0] - stair.get(1)[0]) + Math.abs(human.get(j)[1] - stair.get(1)[1]));
@@ -63,19 +51,18 @@ public class Solution {
 		Queue<Integer> q = new ArrayDeque<>();
 		int stair1_len = board[stair.get(0)[0]][stair.get(0)[1]];
 		int stair1_time = 0;
-		q.offer(stair1.poll() + stair1_len);
 		while(!stair1.isEmpty()) {
 			if (q.size() < 3) {
 				q.offer(stair1.poll() + stair1_len + 1);
 			}
 			else {
-				if (q.peek() < stair1.peek()) {
+				if (q.peek() <= stair1.peek()) {
 					q.poll();
-					q.offer(stair1.poll() + stair1_len);
+					q.offer(stair1.poll() + stair1_len + 1);
 				}
 				else {
 					stair1.poll();
-					q.offer(q.poll() + stair1_len + 1);
+					q.offer(q.poll() + stair1_len);
 				}
 			}
 		}
@@ -89,13 +76,13 @@ public class Solution {
 				q.offer(stair2.poll() + stair2_len + 1);
 			}
 			else {
-				if (q.peek() < stair2.peek()) {
+				if (q.peek() <= stair2.peek()) {
 					q.poll();
-					q.offer(stair2.poll() + stair2_len);
+					q.offer(stair2.poll() + stair2_len + 1);
 				}
 				else {
 					stair2.poll();
-					q.offer(q.poll() + stair2_len + 1);
+					q.offer(q.poll() + stair2_len);
 				}
 			}
 		}
