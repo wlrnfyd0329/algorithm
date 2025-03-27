@@ -19,9 +19,17 @@ void combination(int now, int cnt, int status) {
     }
 }
 
+set<int> s;
+vector<int> v;
+
 int main() {
-    int lf = 1;
-    long long rg = (1 << 31) - 1;
-    int mid = (lf + rg) >> 1;
-    cout << mid;
+    // int lf = 1;
+    // long long rg = (1 << 31) - 1;
+    // int mid = (lf + rg) >> 1;
+    // cout << mid;
+    v.push_back(2);
+    v.insert(v.begin() + 4, 4);
+    for(auto k : v) {
+        cout << k << " ";
+    }
 }   
