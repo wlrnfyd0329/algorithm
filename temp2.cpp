@@ -27,9 +27,10 @@ int main() {
     // long long rg = (1 << 31) - 1;
     // int mid = (lf + rg) >> 1;
     // cout << mid;
-    v.push_back(2);
-    v.insert(v.begin() + 4, 4);
-    for(auto k : v) {
-        cout << k << " ";
+    if (s.lower_bound(0) == s.end()) {
+        cout<< 1;
+    }
+    else {
+        cout << 0;
     }
 }   
