@@ -11,8 +11,8 @@ public class Solution {
 	static int line_cnt;
 	static int min_line;
 	
-	static int[] dx = {0, 1, 0, -1, 0};
-	static int[] dy = {1, 0, -1, 0, 0};
+	static int[] dx = {0, 1, 0, -1};
+	static int[] dy = {1, 0, -1, 0};
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -50,7 +50,7 @@ public class Solution {
 			nx += dx[dir];
 			ny += dy[dir];
 			if (nx < 0 || nx >= N || ny < 0 || ny >= N) return true;
-			if (board[nx][ny] == 1 || board[nx][ny] == 2) return false;
+			if (board[nx][ny] == 1 || (board[nx][ny] != 0 && board[nx][ny] != num + 2)) return false;
 			line_cnt++;
 			board[nx][ny] = num + 2;
 		}
@@ -81,21 +81,20 @@ public class Solution {
 					min_line = line_cnt;
 				}
 			}
+			return;
 		}
 		
-		for(int i = num; i < cores.size(); i++) {
-			for(int dir = 0; dir < 5; dir++) {
-				if (dir == 4) {
-					backtracking(i + 1, cnt + 1);
-					continue;
-				}
-				if (write(i, dir)) {
-					core_cnt++;
-					backtracking(i + 1, cnt + 1);
-				}
-				core_cnt--;
-				erase(i, dir);
+		for(int dir = 0; dir < 4; dir++) {
+			if (dir == 4) {
+				backtracking(num + 1, cnt + 1);
+				continue;
 			}
+			if (write(num, dir)) {
+				core_cnt++;
+				backtracking(num + 1, cnt + 1);
+				core_cnt--;
+			}
+			erase(num, dir);
 		}
 	}
 }
