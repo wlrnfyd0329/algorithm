@@ -20,7 +20,7 @@ struct Product {
 unordered_map<int, Product> table;
 
 struct cmp {
-	bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
+	bool operator() (const pair<int, int>& a, const pair<int, int>& b) const {
 		if (a.X == b.X) return a.Y > b.Y;
 		return a.X < b.X;
 	}
@@ -82,15 +82,22 @@ void cancel() {
 }
 
 void sell() {
-	while (1) {
-		auto cur = product.top(); product.pop();
-		if (table[cur.Y].isCancel) continue;
-		if (cur.X <= 0) {
-			cout << -1 << endl;
-			break;
+	while (!product.empty()) {
+		if (table[product.top().Y].isCancel) {
+			product.pop();
 		}
+		else break;
+	}
+	if (product.empty()) {
+		cout << -1 << endl;
+		return;
+	}
+	auto cur = product.top();
+	if (cur.X < 0) cout << -1 << endl;
+	else {
+		product.pop();
 		cout << cur.Y << endl;
-		break;
+		table[cur.Y].isCancel = true;
 	}
 }
 
