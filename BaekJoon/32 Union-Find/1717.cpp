@@ -18,9 +18,9 @@ bool uni(int u, int v) {
     if (u == v) {
         return false;
     }
-    if (p[v] < p[u]) swap(v, u);
-    if (p[u] == p[v]) p[u]--;
-    p[v] = u;
+    if (p[u] < p[v]) swap(u, v);
+    if (p[u] == p[v]) p[v]--;
+    p[u] = v;
     return true;
 }
 
