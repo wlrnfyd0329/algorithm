@@ -1,3 +1,7 @@
+// 취소된 물건을 lazy하게 잘 처리해야 한다
+// 비어 있는 큐를 항상 고려 해야 한다
+// 우선순위 큐를 사용할 때는 그리디 하게 진행되는 것을 잊으면 안된다
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>

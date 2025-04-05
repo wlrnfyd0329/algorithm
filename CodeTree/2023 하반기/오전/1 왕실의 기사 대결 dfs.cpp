@@ -1,3 +1,6 @@
+// 주어진 문제대로 함수 실행을 하지 않았다
+// 변경한 함수를 적용시킬 때, 변화해야 되는 것을 잘 신경써야 한다 (탈락한 기사 구분을 잘해줘야 한다)
+
 #include <iostream>
 #include <algorithm>
 #include <vector>

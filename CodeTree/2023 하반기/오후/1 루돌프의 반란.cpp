@@ -1,3 +1,5 @@
+// 밀려나는 산타를 while 문으로 잘 처리해야 한다
+
 #include <iostream>
 #include <cmath>
 #define endl "\n"

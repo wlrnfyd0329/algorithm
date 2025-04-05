@@ -1,3 +1,5 @@
+// 함수를 작성할 때, 변경되는 조건을 잘 살피자
+
 #include <iostream>
 #include <queue>
 

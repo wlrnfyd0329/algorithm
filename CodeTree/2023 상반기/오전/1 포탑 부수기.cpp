@@ -1,3 +1,6 @@
+// 문제 조건에 1개의 포탑이 남아있다면 바로 종료된다는 조건을 빼먹었다
+// 또한 shoot이 가장 최근에 공격한 포탑을 찾기 위한 것인데 발사한 순서가 아니라 발사한 횟수를 체크했다
+
 #include <iostream>
 #include <queue>
 #include <string.h>

@@ -1,3 +1,6 @@
+// 우선 순위에 맞는 행과 열을 잘 출력하도록 해야한다
+// 코드를 짜고 예시를 생각해보자
+
 #include <iostream>
 #include <queue>
 #include <vector>

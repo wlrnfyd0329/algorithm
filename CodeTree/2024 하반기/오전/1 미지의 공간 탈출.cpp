@@ -1,3 +1,5 @@
+// 포인트는 탈출하는 좌표를 미리 계산해두는 것이다
+
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -78,6 +80,15 @@ void input() {
             }
         }
     }
+
+    // spacePos[0][0] = startX + M - 1;
+    // spacePos[0][1] = startY + M;
+    // spacePos[1][0] = startX;
+    // spacePos[1][1] = startY - 1;
+    // spacePos[2][0] = startX + M;
+    // spacePos[2][1] = startY;
+    // spacePos[3][0] = startX - 1;
+    // spacePos[3][1] = startY + M - 1;
 
     for (int k = 0; k < 5; k++) {
         for (int i = 0; i < M; i++) {

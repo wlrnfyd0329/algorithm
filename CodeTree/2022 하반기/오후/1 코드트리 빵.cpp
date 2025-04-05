@@ -1,3 +1,5 @@
+// 문제 조건에서 3번 행동에 행과 열에 대한 조건을 빼먹었다
+
 #include <iostream>
 #include <vector>
 #include <string.h>
@@ -91,6 +93,7 @@ int main() {
 		if (time < m) { // 3번 행동
 			queue<pair<int, int>> q;
 			int tvis[20][20];
+			int targetx = 20, targety = 20, dist = 400;
 			for (int i = 0; i < n; i++) {
 				memset(tvis[i], 0, sizeof(int) * n);
 			}
@@ -99,20 +102,37 @@ int main() {
 			while (!q.empty()) {
 				auto cur = q.front(); q.pop();
 				if (board[cur.X][cur.Y] == 1) {
-					human.push_back({ cur.X, cur.Y, time });
-					vis[0][cur.X][cur.Y] = 1;
-					break;
+					if (dist > tvis[cur.X][cur.Y]) {
+						dist = tvis[cur.X][cur.Y];
+						targetx = cur.X;
+						targety = cur.Y;
+					}
+					else if (dist == tvis[cur.X][cur.Y]) {
+						if (targetx > cur.X) {
+							targetx = cur.X;
+							targety = cur.Y;
+						}
+						else if (targetx == cur.X) {
+							if (targety > cur.Y) {
+								targety = cur.Y;
+							}
+						}
+					}
+					else {
+						break;
+					}
 				}
 				for (int dir = 0; dir < 4; dir++) {
 					int nx = cur.X + dx[dir];
 					int ny = cur.Y + dy[dir];
 					if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
 					if (vis[0][nx][ny] || tvis[nx][ny]) continue;
-					tvis[nx][ny] = 1;
+					tvis[nx][ny] = tvis[cur.X][cur.Y] + 1;
 					q.push({ nx, ny });
 				}
 			}
-
+			human.push_back({ targetx, targety, time });
+			vis[0][targetx][targety] = 1;
 		}
 
 	}

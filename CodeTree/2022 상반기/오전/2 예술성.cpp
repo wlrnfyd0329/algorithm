@@ -1,4 +1,4 @@
-// 회전이 중요한 문제였다.
+// 회전이 중요한 문제였다
 
 #include <iostream>
 #include <vector>
