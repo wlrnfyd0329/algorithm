@@ -1,0 +1,111 @@
+<cstring>
+메모리 초기화
+memset(void* ptr, int value, size_t num);
+- ptr : 메모리 시작 주소
+- value : 0, -1 만 확실하게 들어간다
+- num : 메모리 크기 (byte 단위) 보통 sizeof 사용함
+
+int arr[15];
+for문 사용
+int arr[15] = {0, };
+memset(arr, 0, sizeof(int) * 15);
+memset(arr, 0, sizeof(arr));
+
+int arr[15][15];
+int arr[15][15] = {0, };
+memset(arr, 0, sizeof(int) * 15 * 15);
+memset(arr, 0, sizeof(arr));
+
+메모리 복사
+memcpy(void* dest, const void* source, size_t num) 
+- dest : 복사 받을 메모리 주소
+- source : 복사해줄 메모리 주소
+- num : 복사할 데이터의 길이 (byte 단위)
+
+memcpy(dest, src, sizeof(src));
+
+주의할 점
+1. char* 타입일 때는 "\0" 길이도 계산해야 하기에 +1 해줘야 한다
+2. source와 dest 메모리가 겹치는 곳에서는 사용 못한다.
+
+------------------------------------------------------------------------------
+
+char 문자열 길이 구하기, null 문자가 나올 때까지 문자여을 순회하며 계산한다
+strlen(c);
+
+char 문자열을 다른 문자열로 복사, 주의할 점은 대상 문자열이 충분한 크기를 가져야 하고 끝에 "\0"인 null 문자를 포함해야 한다.
+strcpy(char* dest, const char* src);
+strcpy(char* dest, const char* src, size_t num); // sizeof(src) - 1
+
+char 한 문자열 끝에 다른 문자열을 붙인다. 이때도 대상 문자열이 충분한 크기를 가져야 한다.
+strcat(char* dest, const char* src);
+strncat(char* dest, const char* src, size_t num);
+
+char 문자열 비교 같으면 true, 다르면 false
+strcmp(const char* s1, const char* s2);
+strncmp(const char* s1, const char* s2, size_t num);
+
+------------------------------------------------------------------------------
+
+<string>
+string 생성
+- string str("Hello");
+- string str;
+str = "Hello";
+- string str2(str1);
+
+string index 접근
+str.at(index)
+str[index]
+
+str 맨 앞과 맨 뒤 반환 (C++11 이상)
+str.front(), str.back()
+
+str 길이
+str.size(), str.length() => 문자열 길이 출력
+
+str.capacity() => str에 할당된 메모리 크기 반환
+str.resize(n), str.resize(n, 'a') => n만큼의 크기로 만들기, n만큼의 크기 만들고 나머지 'a'로 채우기
+str.reserve(n) => n만큼의 메모리 미리 할당
+
+str 초기화
+str.clear()
+
+str 비어있는지 확인
+str.empty()
+
+str을 char*로 변환
+str.c_str();
+
+str을 자르기
+str.substr(index, len) => 해당 index 부터 len만큼 잘라서 반환
+
+str 값 대체하기
+str.replace(index, len, string &str1) => 해당 index 부터 len만큼의 문자를 전부 str1로 바꾼다
+
+str 값 비교하기
+str.compare(string &str1) => 같으면 0 반환, 다르면 다른값 반환
+
+str 값 복사
+str.copy(char* arr, len, index) => char배열을 받는다 그리고 len만큼 index에 복사한다
+
+str 값 찾기
+str.find(str, [index]) index 부터 str이 있는 위치 반환한다. 없으면 매우 큰 쓰레기 값 반환인데 이는 string::npos이다.
+
+swap(str1, str2) => 서로 값 바꾸기
+
+str1 += str2 => string 끼리 + 가능
+
+------------------------------------------------------------------------------
+
+<cstdlib>
+int atoi (const char* cStr); : char을 int 형으로 변환
+double atof (const char* cStr); : char을 double형으로 변환
+long int atol (const char* cStr); : char을 long형으로 변환
+
+rand(); : 난수 생성
+
+// 정수 타입의 절대값 반환
+int abs(int num);
+long int abs(long int num);
+long long int abs(long long int num);

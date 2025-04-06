@@ -40,18 +40,22 @@ int main() {
     // else {
     //     cout << 0;
     // }
-    v = vector<A> (3);
-    cout << v[0].b;
-    queue<int> q1;
-    q1.push(1);
-    q1.push(2);
-    cout << q1.front() << endl;
-    queue<int> q2 = q1;
-    queue<int> q3(q1);
-    cout << q2.front() << endl;
-    cout << q3.front() << endl;
-    q1.pop();
-    cout << q1.front() << endl;
-    cout << q2.front() << endl;
-    cout << q3.front() << endl;
+    // v = vector<A> (3);
+    // cout << v[0].b;
+    // queue<int> q1;
+    // q1.push(1);
+    // q1.push(2);
+    // cout << q1.front() << endl;
+    // queue<int> q2 = q1;
+    // queue<int> q3(q1);
+    // cout << q2.front() << endl;
+    // cout << q3.front() << endl;
+    // q1.pop();
+    // cout << q1.front() << endl;
+    // cout << q2.front() << endl;
+    // cout << q3.front() << endl;
+    bitset<5> bit = 5;
+    cout << bit << endl;
+    bit.set(3);
+    cout << bit;
 }   

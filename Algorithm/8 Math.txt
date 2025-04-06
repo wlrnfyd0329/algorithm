@@ -1,0 +1,37 @@
+# 소수 구하기
+
+
+# 최대 공약수 구하기
+
+# 최소 공배수 구하기
+
+
+
+
+
+
+
+
+<cmath>
+
+// 실수 타입의 절대값 반환
+double abs(double num)
+float abs(float num)
+long double abs(long double num)
+
+ceil(x) : 정수 올림
+round(x) : 정수 반올림
+floor(x) : 정수 내림
+
+pow(a,b) : a의 b제곱 (a^b)
+sqrt(x) : x의 제곱근(루트)
+log(x) : x의 자연로그 값 반환
+log2(x) : x의 2 로그 값 반환
+log10(x) : x의 상용로그 값 반환
+
+sin(radians) : 라디안 값의 사인값 반환
+cos(radians) : 라디안 값의 코사인값 반환
+tan(radians) : 라디안 값의 탄젠트값 반환
+asin(a) : 입력된 사인값의 라디안값 반환
+acos(a) : 입력된 코사인값의 라디안값 반환
+atan(a) : 입력된 탄젠트값의 라디안값 반환

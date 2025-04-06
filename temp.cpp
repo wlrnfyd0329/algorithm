@@ -45,7 +45,7 @@ int main() {
     cout << user[0].isExist << " " << &user[0] << "\n";
     
 
-    set<Player> s;
+    set<Player> s; // 정렬 기준이 있다면 find, lower_bound 다 됨
 
     s.insert({3, 8});
     s.insert({4, 7});
@@ -73,6 +73,7 @@ int main() {
     cout << "pq : " << endl;
     cout << *pq.top() << " " << pq.size() << endl;
     *pq.top() /= 2;
+    cout << *pq.top() << " " << pq.size() << endl; // pq는 삽입할 때 정렬되어 들어간다. 
     pq.push(pq.top());
     cout << pq.size() << endl;
     cout << *pq.top() << " " << b << pq.size();
