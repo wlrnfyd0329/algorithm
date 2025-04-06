@@ -59,21 +59,24 @@ min({a, b, c, ...}) 여러 개 값 중 최솟값
 max_element(시작 주소, 끝 주소) : array, arraylist에서 최댓값 iterator 반환
 min_element(시작 주소, 끝 주소) : array, arraylist에서 최솟값 iterator 반환
 
-reverse(시작 주소, 끝 주소) : 특정 범위의 원소들의 순서를 거꾸로 한다
-sort(시작 주소, 끝 주소) : 정렬
-bool cmp() {}를 재정의할 수 있는데 넣을 때, cmp()가 아니라 cmp으로 넣어야 한다.
+reverse(시작 주소, 끝 주소) : 특정 범위의 원소들의 순서를 거꾸로 한다 // O(N)
+sort(시작 주소, 끝 주소) : 정렬 // O(N logN);
+bool cmp(const int &a, const int &b) {
+    return a > b;
+}
+bool cmp() {}를 재정의할 수 있는데 넣을 때, cmp()가 아니라 cmp으로 넣어야 한다. 또한 const와  &를 붙여야 한다
 sort(시작, 끝, cmp);
 
-find(시작 주소, 끝 주소, 원하는 값) : 검색
-lower_bound(시작 주소, 끝 주소, 원하는 값) : 원하는 값과 같거나 큰 값 중에 제일 작은 위치
-upper_bound(시작 주소, 끝 주소, 원하는 값) : 원하는 값보다 큰 값 중에 제일 작은 위치
+find(시작 주소, 끝 주소, 원하는 값) : 검색 // O(N)
+lower_bound(시작 주소, 끝 주소, 원하는 값) : 원하는 값과 같거나 큰 값 중에 제일 작은 위치 // O(logN)
+upper_bound(시작 주소, 끝 주소, 원하는 값) : 원하는 값보다 큰 값 중에 제일 작은 위치 // O(logN)
 모두 없으면 마지막 반복자를 반환한다.
-binary_search(시작 주소, 끝 주소, 원하는 값) : 이진 검색 bool 반환
-count(시작 주소, 끝 주소, 원하는 값) : 개수
+binary_search(시작 주소, 끝 주소, 원하는 값) : 이진 검색 bool 반환 // O(logN)
+count(시작 주소, 끝 주소, 원하는 값) : 개수 // O(N)
 
 next_permutation() : 특정 원소들의 다음 순열을 얻는다.
 
-fill(시작 주소, 끝 주소, 원하는 값) : 특정 범위를 원하는 값으로 채운다
+fill(시작 주소, 끝 주소, 원하는 값) : 특정 범위를 원하는 값으로 채운다 // O(N)
 int arr[15];
 fill(arr, arr + 15, n);
 

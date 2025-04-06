@@ -1,0 +1,18 @@
+<Binary Search 구현>
+
+
+<Lower Bound 구현>
+
+
+<Upper Bound 구현>
+
+
+<Parametric Search 구현>
+
+
+
+<이분 탐색>
+
+이 알고리즘의 핵심은 범위를 좁히는 것이다.
+조건에 맞는 영역을 탐색하면서 영역 후보를 반씩 줄이는 것이다.
+

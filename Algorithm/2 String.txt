@@ -78,7 +78,7 @@ str을 char*로 변환
 str.c_str();
 
 str을 자르기
-str.substr(index, len) => 해당 index 부터 len만큼 잘라서 반환
+str.substr(index, len) => 해당 index 부터 len만큼 잘라서 반환 // O(N)
 
 str 값 대체하기
 str.replace(index, len, string &str1) => 해당 index 부터 len만큼의 문자를 전부 str1로 바꾼다
@@ -90,7 +90,7 @@ str 값 복사
 str.copy(char* arr, len, index) => char배열을 받는다 그리고 len만큼 index에 복사한다
 
 str 값 찾기
-str.find(str, [index]) index 부터 str이 있는 위치 반환한다. 없으면 매우 큰 쓰레기 값 반환인데 이는 string::npos이다.
+str.find(str, [index]) index 부터 str이 있는 위치 반환한다. 없으면 매우 큰 쓰레기 값 반환인데 이는 string::npos이다. // O(N)
 
 swap(str1, str2) => 서로 값 바꾸기
 
