@@ -6,9 +6,10 @@ bool vis[n];
 
 void permutation(int cnt) {
     if (cnt == k) {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k; i++) {
             cout << ans[i] << " ";
         }
+        cout << endl;
         return;
     }
 
@@ -22,13 +23,25 @@ void permutation(int cnt) {
     }
 }
 
+void permutation(int cnt, int status) {
+    if (cnt == k) {
+        cout << bitset<5>(status) << "\n";
+        return;
+    }
+    for(int i = 0; i < n; i++) {
+        if ((status & (1 << i)) > 0) continue;
+        permutation(cnt + 1, status | (1 << i));
+    }
+}
+
 <중복순열>
 
 void duplication_permutation(int cnt) {
     if (cnt == k) {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k; i++) {
             cout << ans[i] << " ";
         }
+        cout << endl;
         return;
     }
 
@@ -42,9 +55,10 @@ void duplication_permutation(int cnt) {
 
 void combination(int now, int cnt) {
     if (cnt == k) {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k; i++) {
             cout << ans[i] << " ";
         }
+        cout << endl;
         return;
     }
 
@@ -54,13 +68,25 @@ void combination(int now, int cnt) {
     }
 }
 
+void combination(int now, int cnt, int status) {
+    if (cnt == k) {
+        cout << bitset<5>(status) << "\n";
+        return;
+    }
+
+    for(int i = now; i < n; i++) {
+        combination(i + 1, cnt + 1, status | (1 << i));
+    }
+}
+
 <중복조합>
 
 void duplication_combination(int now, int cnt) {
     if (cnt == k) {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k; i++) {
             cout << ans[i] << " ";
         }
+        cout << endl;
         return;
     }
 
@@ -74,9 +100,10 @@ void duplication_combination(int now, int cnt) {
 
 void subset(int cnt) {
     if (cnt == n) {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < k; i++) {
             cout << vis[i] << " ";
         }
+        cout << endl;
         return;
     }
 

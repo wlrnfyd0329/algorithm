@@ -1,18 +1,114 @@
 <Binary Search 구현>
 
+int n; // arr 크기
+
+bool binary_search(int target) {
+    int lf = 0, rg = n - 1;
+    while (lf <= rg) {
+        int mid = (lf + rg) >> 1;
+        if (arr[mid] == target) {
+            return true;
+        }
+        else if (arr[mid] < target) {
+            lf = mid + 1;
+        }
+        else {
+            rg = mid - 1;
+        }
+    }
+
+    return false;
+}
+
+들어갈 위치를 반환하고 싶다면 lf를 출력하면 된다.
+값이 없다고 가정하면 lf가 커지면서 끝나기 때문에 다음 자리에 들어간다고 생각하면 좋다.
 
 <Lower Bound 구현>
 
+int lower_bound(int target) {
+    int lf = 0, rg = n - 1;
+    while (lf <= rg) {
+        int mid = (lf + rg) >> 1;
+        if (arr[mid] < target) {
+            lf = mid + 1;
+        }
+        else {
+            rg = mid - 1;
+        }
+    }
+
+    return lf;
+}
+
+lower_bound는 같거나 큰 것 중에 최소값이기 때문에 lf를 출력한다.
+rg가 결국 lf 보다 작아지면서 끝나기 때문에 rg를 출력하면 lower_bound보다 작은 애들을 알 수 있다.
 
 <Upper Bound 구현>
 
+int upper_bound(int target) {
+    int lf = 0, rg = n - 1;
+    while (lf <= rg) {
+        int mid = (lf + rg) >> 1;
+        if (arr[mid] <= target) {
+            lf = mid + 1;
+        }
+        else {
+            rg = mid - 1;
+        }
+    }
+
+    return lf;
+}
+
+upper_bound는 큰 것 중에 최소값이기 때문에 lf를 출력한다.
+lf가 rg보다 커지면서 끝나기 때문에 rg를 출력하면 upper_bound보다 작은 애들을 알 수 있다.
 
 <Parametric Search 구현>
 
+특정 범위의 최솟값을 구할 때
+rg가 lf 보다 작아지면서 끝난다. 최솟값을 구하기 되면 계속 작아지니까
+근데 만약에 계속 커진다고 생각한다면 lf = rg + 1;이 결국 되니까 n - 1로 출력 될 것임을 생각해야 한다.
+rg = n - 1이라면 lf가 n이 나올 것이다.
 
+int parametric_search(int target) {
+    int lf = 0; rg = n - 2;
+    while (lf <= rg) {
+        int mid = (lf + rg) >> 1;
+        if (!function(mid)) {
+            lf = mid + 1;
+        }
+        else {
+            rg = mid - 1;
+        }
+    }
+
+    return lf;
+}
+
+특정 범위의 최댓값을 구할 때
+lf가 rg 보다 커지면서 끝난다. 최댓값을 구하기 되면 계속 커지니까
+근데 만약에 계속 작아진다고 생각한다면 rg = lf - 1;이 결국 되니까 0으로 출력 될 것임을 생각해야 한다.
+lf가 0이라면 rg = -1이 나올 것이다.
+
+int parametric_search(int target) {
+    int lf = 1; rg = n - 1;
+    while (lf <= rg) {
+        int mid = (lf + rg) >> 1;
+        if (function(mid)) {
+            lf = mid + 1;
+        }
+        else {
+            rg = mid - 1;
+        }
+    }
+
+    return rg;
+}
 
 <이분 탐색>
 
 이 알고리즘의 핵심은 범위를 좁히는 것이다.
 조건에 맞는 영역을 탐색하면서 영역 후보를 반씩 줄이는 것이다.
 
+구현이 헷갈린다면 같아질때, lf가 넘어가는지, rg가 넘어가는지 생각해보면 된다. lf와 rg 범위도 끝으로 갔을 때를 잘 생각해보면 좋다.
+시간 복잡도 : O(logN)

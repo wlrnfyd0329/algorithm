@@ -1,1 +1,23 @@
 <Union-Find 구현>
+
+분리 집합이라고도 한다.
+
+구현
+
+vector<int> p(n, -1);
+
+int find(int x) {
+    if (p[x] < 0) return x;
+    return p[x]; -> 경로 압축 x
+    return p[x] = find(p[x]) -> 경로 압축 o
+}
+
+bool uni(int u, int v) {
+    u = find(u);
+    v = find(v);
+    if (u == v) return false;
+    if (p[u] < p[v]) swap(u, v); -> union by rank
+    if (p[u] == p[v]) p[v]--; -> union by rank 이 부분을 p[v] += p[u];로 바꾸면 자식의 개수도 알 수 있다.
+    p[u] = v;
+    return true;
+}

@@ -1,8 +1,105 @@
 <다이나믹 세그먼트 트리 구현>
 
+typedef long long ll;
+
+struct Node {
+    Node *left, *right;
+    ll value;
+    Node() {
+        left = right = null;
+        value = 0;
+    }
+} *root;
+
+ll init(Node *node, int start, int end) {
+    if (start == end) {
+        return node->value = arr[start];
+    }
+    int mid = (start + end) >> 1;
+    if (!node->left) node->left = new Node();
+    if (!node->right) node->right = new Node();
+    return node->value = init(node->left, start, mid) + init(node->right, mid + 1, end);
+}
+
+void update(Node *node, int start, int end, int index, int value) {
+    if (start == end) {
+        node->value = value;
+        return;
+    }
+    int mid = (start + end) >> 1;
+    if (index <= mid) {
+        if (!node->left) node->left = new Node();
+        update(node->left, start, mid, index, value);
+    }
+    else {
+        if (!node->right) node->right = new Node();
+        update(node->right, mid + 1, end, index, value);
+    }
+    ll tmp1 = node->left ? node->left->value : 0;
+    ll tmp2 = node->right ? node->right->value : 0;
+    node->value = tmp1 + tmp2;
+}
+
+ll query(Node *node, int start, int end, int left, int right) {
+    if (!node) return 0;
+    if (right < start || end < left) return 0;
+    if (left <= start && end <= right) return node->value;
+    int mid = (start + end) >> 1;
+    return query(node->left, start, mid, left, right) + query(node->right, mid + 1, end, left, right);
+}
 
 <lazy 다이나믹 세그먼트 트리 구현>
 
+typedef long long ll;
+
+struct Node {
+    Node *left, *right;
+    ll lazy;
+    ll value;
+    Node() {
+        left = right = null;
+        value = lazy = 0;
+    }
+} *root;
+
+void lazy_update(Node *node, int start, int end) {
+    if (!node) return;
+    if (node->lazy != 0) {
+        node->value += (end - start + 1) * node->lazy;
+        if (start != end) {
+            if (!node->left) node->left = new Node();
+            node->left->lazy += node->lazy;
+            if (!node->right) node->right = new Node();
+            node->right->lazy += node->lazy;
+        }
+        node->lazy = 0;
+    }
+}
+
+void update(Node *node, int start, int end, int left, int right, int value) {
+    lazy_update(node, start, end);
+    if (right < start || end < left) return;
+    if (left <= start && right <= end) {
+        node->lazy += value;
+        lazy_update(node, start, end);
+        return;
+    }
+    int mid = (start + end) >> 1;
+    if (!node->left) node->left = new Node();
+    update(node->left, start, mid, index, value);
+    if (!node->right) node->right = new Node();
+    update(node->right, mid + 1, end, index, value);
+    node->value = node->left->value + node->right->value;
+}
+
+ll query(Node *node, int start, int end, int left, int right) {
+    lazy_update(node, start, end);
+    if (!node) return 0;
+    if (right < start || end < left) return 0;
+    if (left <= start && end <= right) return node->value;
+    int mid = (start + end) >> 1;
+    return query(node->left, start, mid, left, right) + query(node->right, mid + 1, end, left, right);
+}
 
 <다이나믹 세그먼트 트리>
 

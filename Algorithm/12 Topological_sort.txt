@@ -1,8 +1,26 @@
 <위상 정렬 구현>
 
+vector<vector<int>> graph;
+int degree[n];
 
+a -> b 로 가리키고 있다면 degree[b]++;를 해준다.
 
+queue<int> q;
+vector<int> result;
+for(int i = 0; i < n; i++) {
+    if (degree[i] == 0) q.push(i);
+}
+while(!q.empty()) {
+    auto cur = q.front(); q.pop();
+    result.push_back(cur);
+    for(auto nxt : graph[cur]) {
+        degree[nxt]--;
+        if (degree[nxt] == 0) q.push(nxt);
+    }
+}
 
 <위상 정렬>
 
-
+degree를 감소시키고 0이라면 q에 넣는 것이 핵심이다.
+정점 V, 간선 E
+시간 복잡도 : O(V+E)

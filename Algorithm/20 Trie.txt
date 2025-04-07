@@ -1,7 +1,91 @@
 <Trie 구현>
 
+정적 배열 사용해서 구현
 
+const int ROOT = 1;
+int unused = 2;
+const int MX = 10000 * 500 + 5; // 최대 등장 가능한 글자의 수, 길이가 최대 500인 글자가 10000번 나온다
+bool chk[MX];
+int nxt[MX][26]; // 영어라서 26개다. 다른 문자라면 개수가 달라질 것이다.
+
+fill(nxt[0], nxt[MX], -1);
+
+int c2i(char c) {
+    return c - 'A';
+}
+
+void insert(string& s) {
+    int cur = ROOT;
+    for(auto c : s) {
+        if (nxt[cur][c2i(c)] < 0) {
+            nxt[cur][c2i(c)] = unused++;
+        }
+        cur = nxt[cur][c2i(c)];
+    }
+    chk[cur] = true;
+}
+
+bool find(string& s) {
+    int cur = ROOT;
+    for(auto c : s) {
+        if (nxt[cur][c2i(c)] < 0) {
+            return false;
+        }
+        cur = nxt[cur][c2i(c)];
+    }
+    return chk[cur];
+}
+
+void erase(string& s) {
+    int cur = ROOT;
+    for(auto c : s) {
+        if (nxt[cur][c2i(c)] < 0) {
+            return;
+        }
+        cur = nxt[cur][c2i(c)];
+    }
+    chk[cur] = false;
+}
+
+동적 배열 사용해서 구현
+
+struct Trie {
+    bool finish;
+    Trie* node[26];
+
+    Trie() {
+        finish = false;
+    }
+
+    void insert(string &s, int idx) {
+        if (idx == s.length()) {
+            finish = true;
+            return;
+        }
+        if (node[s[idx] - 'a'] == null) node[s[idx] - 'a'] = new Trie();
+        node[s[idx] - 'a']->insert(s, idx + 1);
+    }
+
+    bool find(string &s, int idx) {
+        if (idx == s.length()) {
+            if (finish) return true;
+            else return false;
+        }
+        if (node[s[idx] - 'a'] == null) return false;
+        return node[s[idx] - 'a']->find(s, idx + 1);
+    }
+
+    void erase(string &s, int idx) {
+        if (idx == s.length()) {
+            finish = false;
+            return;
+        }
+        if (node[s[idx] - 'a'] == null) return;
+        node[s[idx] - 'a']->erase(s, idx + 1);
+    }
+}
 
 <Trie>
 
 자료구조의 핵심은 문자열 문제를 트리 문제로 변환한다는 점이다.
+시간 복잡도 : O(|S|)

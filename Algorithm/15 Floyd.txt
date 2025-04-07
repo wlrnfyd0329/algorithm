@@ -1,5 +1,48 @@
 <플로이드 알고리즘 구현>
 
+const int INF = 0x3f3f3f3f;
+int graph[100][100];
+int nxt[100][100]; // 해당 간선으로 이동했을 때, 도착한 정점을 의미한다.
+a -> b로 가는 간선이라면 nxt[a][b] = b;
+fill(graph[0], graph[100], INF);
+
+
+void floyd() {
+    for(int i = 0; i < 100; i++) {
+        for(int j = 0; j < 100; j++) {
+            if (i == j) graph[i][j] = 0;
+        }
+    }
+
+    for(int k = 0; k < 100; k++) {
+        for(int i = 0; i < 100; i++) {
+            for(int j = 0; j < 100; j++) {
+                int st = graph[i][k];
+                int en = graph[k][j];
+                if (graph[i][j] > st + en) {
+                    graph[i][j] = st + en;
+                    nxt[i][j] = nxt[i][k]; // 경로 복원
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < 100; i++) { // 경로 복원 코드
+        for(int j = 0; j < 100; j++) {
+            if (graph[i][j] == 0 || d[i][j] == INF) continue;
+            vector<int> path;
+            int st = i;
+            while(st != j) {
+                path.push_back(st);
+                st = nxt[st][j];
+            }
+            path.push_back(j);
+            for(auto x : path) cout << x << " ";
+            cout << endl;
+        }
+    }
+}
+
 
 <플로이드 알고리즘>
 

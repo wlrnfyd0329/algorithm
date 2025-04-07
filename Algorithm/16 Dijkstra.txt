@@ -1,5 +1,37 @@
 <다익스트라 알고리즘 구현>
 
+const int INF = 0x3f3f3f3f;
+vector<vector<pair<int, int>> graph; // [출발 노드] = {가중치, 도착 노드};
+int dist[노드 수];
+fill(dist, dist + 노드 수, INF);
+int pre[노드 수];
+priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+dist[st] = 0;
+pq.push(dist[st], st);
+
+while(!pq.empty()) {
+    auto cur = pq.top(); pq.pop();
+
+    if (dist[cur.second] != cur.first) continue;
+    for(auto nxt : graph[cur.second]) {
+        if (dist[nxt.second] <= nxt.first + dist[cur.second]) continue;
+        dist[nxt.second] = nxt.first + dist[cur.second];
+        pre[nxt.second] = cur.second; // 경로 복원
+        pq.push({dist[nxt.second], nxt.second});
+    }
+}
+
+cout << dist[en] << endl;
+vector<int> path;
+int cur = en;
+while(cur != st) {
+    path.push_back(cur);
+    cur = pre[cur];
+}
+path.push_back(cur);
+reverse(path.begin(), path.end());
+for(auto x : path) cout << x << " ";
 
 <다익스트라 알고리즘>
  

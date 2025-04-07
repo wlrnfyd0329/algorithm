@@ -1,9 +1,67 @@
+<최소 신장 트리>
+
+그래프 내의 간선이 많은 경우는 프림 알고리즘
+간선이 적은 경우는 크루스칼 알고리즘이 유리하다.
+
 <프림 알고리즘>
 
+priority_queue를 사용해서 한다. 정점 V, 간선 E
+시간 복잡도 : O(ElogV + VlogV) => O(ElogV)
+
+vector<vector<pair<int, int>>> graph; [출발 정점] = {가중치, 도착 정점};
+priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // 가중치를 최소부터 뽑아야 하기 때문에 최소 힙으로 선언
+bool vis[노드 수];
+int cnt = 0;
+
+vis[start] = true;
+for(auto nxt : graph[start]) {
+    pq.push(nxt);
+}
+
+while(cnt < 노드 수 - 1) {
+    auto cur = pq.top(); pq.pop();
+    if (vis[cur.second]) continue;
+    cnt++;
+    vis[cur.second] = true;
+    for(auto nxt : graph[cur]) {
+        if(vis[nxt.second]) continue;
+        pq.push(nxt);
+    }
+}
 
 <크루스칼 알고리즘>
 
+union-find를 사용해서 한다. 간선 E
+시간 복잡도 : O(ElogE)
 
-<최소 신장 트리>
+vector<tuple<int, int, int>> graph;
+vector<int> p(노드 수, -1);
+int cnt = 0;
+int sum = 0;
+
+sort(graph.begin(), graph.end());
+
+int find(int x) {
+    if (p[x] < 0) return x;
+    return p[x] = find(p[x]);
+}
+
+bool uni(int u, int v) {
+    u = find(u);
+    v = find(v);
+    if (u == v) return false;
+    if (p[u] < p[v]) swap(u, v);
+    if (p[u] == p[v]) p[v]--;
+    p[u] = v;
+    return true;
+}
+
+for(int i = 0, i < graph.size(); i++) {
+    int cost, st, en;
+    tie(cost, st, en) = graph[i];
+    if (!uni(st, en)) continue;
+    sum += cost;
+    if (++cnt == 노드 수 - 1) break;
+}
 
 
