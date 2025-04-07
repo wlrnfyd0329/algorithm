@@ -1,1 +1,42 @@
 <List>
+
+List 자료구조는 LinkedList라고도 하며 stl로 제공하긴 하지만 직접 구현해서 사용하는 것이 더욱 범용성이 좋다.
+메모리가 연속되어 있지 않으며 포인터로 서로를 연결되어 있다.
+랜덤 엑세스가 불가능하지만 임의 위치까지만 간다고 하면 위치의 원소 추가/삭제가 O(1)이다. 
+
+구현 
+
+struct Node {
+    Node *prev;
+    Node *next;
+    int value;
+}
+
+struct List {
+    Node head;
+    Node tail;
+
+    void static link(Node* front, Node *back) {
+        front->next = back;
+        back->prev = front;
+    }
+
+    void init() {
+        link(head, tail);
+    }
+
+    void push_back(Node *node) {
+        link(tail.prev, node);
+        link(node, &tail);
+    }
+
+    void static erase(Node* node) {
+        link(node->prev, node->next);
+    }
+
+    bool isEmpty() {
+        return (head.next == &tail);
+    }
+}
+
+stl을 사용하고 싶다면 deque에서 random access를 제외한다면 명령어는 같다.

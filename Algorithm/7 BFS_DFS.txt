@@ -1,0 +1,48 @@
+<BFS>
+
+상하좌우를 모두 평등하게 순회한다.
+가중치가 모든 같을 때, 최단거리를 구할 수 있다. queue를 사용하여 구현한다.
+상태를 관리함에 따라 3차원 배열을 bfs 하는 것도 생각할 수 있다.
+
+int board[n][n];
+int vis[n][n];
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
+
+queue<pair<int, int>> q;
+
+q.push({start_x, start_y});
+vis[start_x][start_y] = true;
+while(!q.empty()) {
+    auto cur = q.front(); q.pop();
+
+    for(int i = 0; i < 4; i++) {
+        int nx = cur.first + dx[i];
+        int ny = cur.second + dy[i];
+        if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
+        if(vis[nx][ny]) continue;
+        q.push({nx, ny});
+        vis[nx][ny] = true;
+    }
+}
+
+
+<DFS>
+
+stack 또는 재귀를 사용하여 순회하는 방식이다. 하나의 방향으로 끝까지 갔다가 되돌아오는 형식이다.
+
+위의 코드에서 queue를 stack으로만 바꾸면 된다.
+재귀로 하는 것은 다음과 같다.
+
+void dfs(int x, int y) {
+    for(int i = 0; i < 4; i++) {
+        int nx = cur.first + dx[i];
+        int ny = cur.second + dy[i];
+        if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
+        if(vis[nx][ny]) continue;
+        vis[nx][ny] = true;
+        dfs(nx, ny);
+    }
+}
+
+dfs(start_x, start_y);

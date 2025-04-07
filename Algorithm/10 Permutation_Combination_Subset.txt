@@ -1,13 +1,87 @@
 <순열>
+// n개 중에 k개 뽑기
 
+int ans[k];
+bool vis[n];
+
+void permutation(int cnt) {
+    if (cnt == k) {
+        for(int i = 0; i < n; i++) {
+            cout << ans[i] << " ";
+        }
+        return;
+    }
+
+    for(int i = 0; i < n; i++) {
+        if (!vis[i]) {
+            vis[i] = true;
+            ans[cnt] = i;
+            permutation(cnt + 1);
+            vis[i] = false;
+        }
+    }
+}
 
 <중복순열>
 
+void duplication_permutation(int cnt) {
+    if (cnt == k) {
+        for(int i = 0; i < n; i++) {
+            cout << ans[i] << " ";
+        }
+        return;
+    }
+
+    for(int i = 0; i < n; i++) {
+        ans[cnt] = i;
+        duplication_permutation(cnt + 1);
+    }
+}
 
 <조합>
 
+void combination(int now, int cnt) {
+    if (cnt == k) {
+        for(int i = 0; i < n; i++) {
+            cout << ans[i] << " ";
+        }
+        return;
+    }
+
+    for(int i = now; i < n; i++) {
+        ans[cnt] = i;
+        combination(i + 1, cnt + 1);
+    }
+}
 
 <중복조합>
 
+void duplication_combination(int now, int cnt) {
+    if (cnt == k) {
+        for(int i = 0; i < n; i++) {
+            cout << ans[i] << " ";
+        }
+        return;
+    }
+
+    for(int i = now; i < n; i++) {
+        ans[cnt] = i;
+        duplication_combination(i, cnt + 1);
+    }
+}
 
 <부분집합>
+
+void subset(int cnt) {
+    if (cnt == n) {
+        for(int i = 0; i < n; i++) {
+            cout << vis[i] << " ";
+        }
+        return;
+    }
+
+    vis[cnt] = true;
+    subset(cnt + 1);
+    vis[cnt] = false;
+    subset(cnt + 1);
+}
