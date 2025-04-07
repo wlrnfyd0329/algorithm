@@ -6,10 +6,10 @@ struct Node {
     Node *left, *right;
     ll value;
     Node() {
-        left = right = null;
+        left = right = nullptr;
         value = 0;
     }
-} *root;
+} *root = new Node();
 
 ll init(Node *node, int start, int end) {
     if (start == end) {
@@ -57,10 +57,10 @@ struct Node {
     ll lazy;
     ll value;
     Node() {
-        left = right = null;
+        left = right = nullptr;
         value = lazy = 0;
     }
-} *root;
+} *root = new Node();
 
 void lazy_update(Node *node, int start, int end) {
     if (!node) return;
