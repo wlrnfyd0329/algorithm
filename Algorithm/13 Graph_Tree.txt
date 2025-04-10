@@ -25,8 +25,8 @@ int n;
 vector<int> v(n + 1);
 
 void dfs(int cur, int prv) { => 그래프가 아닌 트리는 방문처리를 걱정할 필요가 없다. 위로 올라가지 않기 때문에
-    sz[cur] = 1;
     par[cur] = prv;
+    sz[cur] = 1;
     for(auto nxt : v[cur]) {
         if (nxt == prv) continue; // 무향 그래프라면 만날 수 있다.
         depth[nxt] = depth[cur] + 1;
@@ -35,6 +35,104 @@ void dfs(int cur, int prv) { => 그래프가 아닌 트리는 방문처리를 �
     }
 }
 
+depth[root] = 0;
 dfs(root, -1);
 
 위와 같은 방식으로 부모 노드, 깊이, 서브트리 노드 수를 구할 수 있다.
+
+LCA 알고리즘은 최소 공통 조상을 찾는 알고리즘이다.
+두 개의 노드가 있다고 가정하면, 공통 조상을 찾기 위해서는 서로 위로 올라가면서 찾으면 된다.
+동시에 위로 올라가며 찾는다고 할때, 노드끼리의 깊이가 다르다면 공통 조상을 만나기 어려울 것이다. 
+그래서 서로의 깊이를 맞춰준다. 그 후에는 선형 탐색과 이분 탐색으로 찾을 수 있다.
+
+LCA 알고리즘이 선행되기 전에 depth와 자신의 조상이 누군지 미리 계산해둬야 한다.
+자신의 조상을 저장할 때, 선행 탐색은 자신의 첫번째 조상만 저장하면 되지만,
+이분 탐색으로 진행하려면 자신의 2^k번째 조상을 미리 상향식 DP 처럼 저장해둬야 한다.
+
+위에 dfs 코드를 보면 dfs로 순회하면서 자신의 부모 노드와 깊이를 알 수 있다.
+par[]이 1차원 배열이기 때문에 선형 탐색을 사용할 수 있다.
+
+<Linear LCA>
+
+int lca(int a, int b) {
+    // a를 depth가 깊어지도록 맞춘다.
+    if (depth[a] < depth[b]) swap(a, b);
+
+    // 두 노드의 depth를 같게 만든다.
+    while(depth[a] != depth[b]) {
+        a = par[a];
+    }
+
+    // 공통 조상이 나올 때까지 거슬러 올라가기
+    while(a != b) {
+        a = par[a];
+        b = par[b];
+    }
+
+    return a;
+}
+
+이분 탐색을 하려면 2^k의 조상을 알고 있어야 하기 때문에
+par[][] 같은 2차원 배열을 사용해야 한다.
+위의 dfs에서 par[]대신에 par[][0]에 값을 넣고 자신의 2^k번째 조상을 찾아가며 DP table을 채운다.
+이때 2번째 index의 의미는 2^k번째 조상이라는 뜻이다. 0이라면 1번째 조상, 3이라면 8번째 조상
+
+<Binary LCA>
+
+void dfs(int cur, int prv) {
+    par[cur][0] = prv;
+
+    for(int i = 1; i <= MAX_LEVEL; i++) {
+        par[cur][i] = par[par[cur][i - 1]][i - 1];
+    }
+
+    sz[cur] = 1;
+    for(auto nxt : v[cur]) {
+        if (nxt == prv) continue;
+        depth[nxt] = depth[cur] + 1;
+        dfs(nxt, cur);
+        sz[cur] += sz[nxt];
+    }
+}
+
+// dfs 중에 하기 싫다면 다 순회해서 2^0 번째 조상을 모두 찾은 후 아래 함수를 진행해도 된다.
+
+void lca2_dp() 
+{
+    for (int k = 1; k < NODE_CNT; k++)
+    {
+        for (int idx = 1; idx <= MAX_LEVEL; idx++)
+        { // 1부터 하는건 초기화의 목적도 있음
+            parent[idx][k] = parent[parent[idx][k - 1]][k - 1];
+        }
+    }
+}
+
+int lca(int a, int b) {
+    // 만약 둘 중 하나가 ROOT 노드라면 lca 는 무조건 ROOT 이기에 함수를 종료시킨다.
+    if (a == 1 || b == 1) return 1;
+
+    // a를 depth가 깊어지도록 맞춘다.
+    if (depth[a] < depth[b]) swap(a, b);
+
+    // 두 노드의 depth를 같게 만든다.
+    if(depth[a] != depth[b]) {
+        for(int i = MAX_LEVEL; i >= 0; i--) {
+            if (depth[par[a][i]] >= depth[b]) {
+                a = parent[a][i];
+            }
+        }
+    }
+
+    // 공통 조상이 나올 때까지 거슬러 올라가기
+    if(a != b) {
+        for(int i = MAX_LEVEL; i >= 0; i--) {
+            if (par[a][i] != par[b][i]) {
+                a = parent[a][i];
+                b = parent[b][i];
+            }
+        }
+    }
+
+    return parent[a][0];
+}

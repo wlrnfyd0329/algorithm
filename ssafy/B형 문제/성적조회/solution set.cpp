@@ -1,3 +1,5 @@
+// set을 재정의하여 풀면 되는 문제였다.
+
 #include <unordered_map>
 #include <algorithm>
 #include <set>

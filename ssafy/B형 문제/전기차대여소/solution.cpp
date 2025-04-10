@@ -1,3 +1,6 @@
+// 호출 횟수가 적은 add 함수에서 거리를 미리 계산해주는 것이 핵심인 문제였다.
+// 다른건 다익스트라
+
 #include <vector>
 #include <queue>
 #include <string.h>
@@ -32,7 +35,7 @@ void init(int N, int mRange, int mMap[MAX_N][MAX_N])
     }
 }
 
-void add(int mID, int mRow, int mCol)
+void add(int mID, int mRow, int mCol) // O(N^2) : 4 * 100 * 100 => 40,000 => 40,000 * 200 => 8,000,000
 {
     // 각 간선과 노드 미리 계산
     queue<pair<int, int>> q;
@@ -69,7 +72,7 @@ void add(int mID, int mRow, int mCol)
     }
 }
 
-int distance(int mFrom, int mTo)
+int distance(int mFrom, int mTo) // O(Nlogn) = 200 * 8 = 1600 => 1600 * 800 = 1,280,000
 {
     // 다익스트라
     int dist[205];

@@ -1,3 +1,5 @@
+// 하나의 덩어리를 두 개의 set으로 나눠서 구현하는 것이 시간을 줄일 수 있는 핵심이었다.
+
 #include <set>
 #include <vector>
 #include <iostream>
