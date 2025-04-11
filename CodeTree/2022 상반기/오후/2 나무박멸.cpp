@@ -1,3 +1,5 @@
+// k번 전파 되는 조건을 빼먹어서 틀렸다...
+
 #include <iostream>
 #include <vector>
 #define X first
