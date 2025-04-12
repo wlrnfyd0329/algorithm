@@ -2,6 +2,7 @@
 // W 범위를 잘 못 봐서 더했을 때, long long을 안해줬다.
 // 제일 앞에 있는 박스는 앞으로 당겨올 필요가 없는데 고려를 안해줬다.
 // List 구현시 항상 포인터를 넘겨줘야지 제대로 값이 담긴다.
+// init, insert, erase, empty, link는 항상 구현하자
 
 #include <iostream>
 #include <unordered_map>
