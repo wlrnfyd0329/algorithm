@@ -1,3 +1,5 @@
+// 동시에 관리해야 되는 것을 포인터를 통해서 주소값을 다루는 것이 포인트였다.
+
 #include <map>
 #include <queue>
 #include <vector>

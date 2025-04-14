@@ -1,3 +1,5 @@
+// 변화가 시작 되는 것을 모두 저장하는 것이 포인트였다.
+
 #include <map>
 #include <string>
 #include <iostream>
