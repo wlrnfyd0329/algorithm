@@ -1,3 +1,9 @@
+// 중요한 포인트는 조회를 하고자 하는 사람을 정렬하고 순서대로 update 하며 자기 자신보다 큰 사람들의 수를 query하면 된다.
+// 정수의 범위가 1 ~ 1,000,000,000 인데, N은 3 ~ 500,000 이기 때문에 나온 정수를 N의 범위로 줄여야 한다.
+// 들어온 순서대로 update하고 query하는데, 세그먼트 트리의 노드는 정렬한 순서의 index를 따른다.
+// 들어온 순서대로 해당 정렬된 위치를 신경써서 진행하는 것이 포인트다.
+// 정렬하지 않고 진행하려면 다이나막 세그먼트 트리로 하는 것도 가능할 것 같다.
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -39,11 +45,11 @@ int main() {
     for(int i = 0; i < n; i++) {
         int num;
         cin >> num;
-        power.push_back(num);
         v.push_back({num, i});
     }
     sort(v.begin(), v.end());
 
+    power = vector<int> (n);
     for(int i = 0; i < n; i++) {
         power[v[i].second] = i + 1;
     }
