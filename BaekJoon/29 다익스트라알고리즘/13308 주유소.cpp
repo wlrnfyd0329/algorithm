@@ -25,7 +25,7 @@ struct Node {
 };
 vector<Road> road[2505];
 priority_queue<Node> pq;
-ll dist[2505][2505];
+ll dist[2505][2505]; // 1번 도시에서 [0]도시까지 기름의 가격이 [1]일때 최소 비용
 
 ll dijkstra() {
     pq.push({0, 1, fuel[1]});
