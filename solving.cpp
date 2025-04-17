@@ -1,41 +1,19 @@
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <string>
 #define endl "\n"
 
 using namespace std;
 
-int n;
-vector<int> v;
-int cnt[10];
+int n, m;
+string s;
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		int num; cin >> num;
-		v.push_back(num);
-	}
+	cin >> n >> m >> s;
+	for(int i = 0; i < m; i++) {
+		
 
-	int type = 1, ans = 0;
-	int st = 0, en = 1;
-	cnt[v[st]] = 1;
-	while (en < n) {
-		if (type <= 2) {
-			if (!cnt[v[en]]) {
-				type++;
-				cnt[v[en]]++;
-				continue;
-			}
-			en++;
-		}
-		else {
-			ans = max(ans, en - st);
-			if (--cnt[v[st]] == 0) type--;
-			st++;
-		}
 	}
-
-	cout << max(ans, en - st);
 }
