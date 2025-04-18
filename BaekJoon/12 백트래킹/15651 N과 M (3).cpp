@@ -1,4 +1,4 @@
-// 중복 조합 구현 문제
+// 중복순열 구현 문제
 
 #include <iostream>
 #define endl "\n"
@@ -8,7 +8,7 @@ using namespace std;
 int n, m;
 int arr[10];
 
-void repeated_combination(int now, int cnt) {
+void repeated_permutation(int cnt) {
 	if (cnt == m) {
 		for(int i = 0; i < m; i++) {
 			cout << arr[i] << " ";
@@ -17,9 +17,9 @@ void repeated_combination(int now, int cnt) {
 		return;
 	}
 
-	for(int i = now; i <= n; i++) {
+	for(int i = 1; i <= n; i++) {
 		arr[cnt] = i;
-		repeated_combination(i, cnt + 1);
+		repeated_permutation(cnt + 1);
 	}
 }
 
@@ -27,5 +27,5 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	cin >> n >> m;
-	repeated_combination(1, 0);
+	repeated_permutation(0);
 }

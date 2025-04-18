@@ -103,7 +103,7 @@ void lca2_dp()
     {
         for (int idx = 1; idx <= MAX_LEVEL; idx++)
         { // 1부터 하는건 초기화의 목적도 있음
-            parent[idx][k] = parent[parent[idx][k - 1]][k - 1];
+            parent[k][idx] = parent[parent[k][idx - 1]][idx - 1];
         }
     }
 }
