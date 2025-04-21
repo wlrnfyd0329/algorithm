@@ -1,3 +1,7 @@
+// 유명한 LCS 문제다.
+// 최장 공통 문자열(계속 이어져야 함), 최장 공통 부분수열(끊어져도 됨) 알고리즘 둘 다 lcs 알고리즘이라고 불린다.
+// 또한 역추적하여 부분수열을 찾을 수 있어야 한다.
+
 #include <iostream>
 #include <algorithm>
 #include <string>
