@@ -1,0 +1,33 @@
+<분할 정복 알고리즘>
+문제를 여러 개의 작은 문제로 분할(Divide)하고, 정복(Conquer), 즉 해결한다. 
+시간 복잡도 : O(logN)
+
+<빠른 거듭 제곱 알고리즘>
+
+아래는 2의 거듭제곱을 구하고 sum의 나머지를 계산하고 있지만 어떤 수든 상관없다.
+
+ll recur_solve(ll num) {
+    if (num == 1) return 2 % sum;
+
+    ll tmp = recur_solve(num / 2);
+
+    if (num % 2 == 0) {
+        return (tmp * tmp) % sum;
+    }
+    else {
+        return ((tmp * tmp) % sum * 2) % sum;
+    }
+}
+
+ll non_recur_solve(ll num) {
+    ll ans = 1;
+    ll tmp = 2; 
+    while (num > 0) {
+        if (num % 2 == 1) ans = (ans * tmp) % sum;
+
+        tmp = (tmp * tmp) % sum;
+        num /= 2;
+    }
+    return ans;
+}
+
