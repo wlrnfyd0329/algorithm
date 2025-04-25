@@ -5,46 +5,34 @@
 
 using namespace std;
 
-int R, C, ans;
-int board[25][25];
-bool vis[25][25];
-bool vis_alpha[26];
-
-int dx[4] = {1, 0, -1, 0};
-int dy[4] = {0, 1, 0, -1};
-
-inline int c2i(char c) {
-    return c - 'A';
-}
-
-void dfs(int x, int y, int dist) {
-    ans = max(ans, dist);
-
-    for(int dir = 0; dir < 4; dir++) {
-        int nx = x + dx[dir];
-        int ny = y + dy[dir];
-        if (nx < 0 || nx >= R || ny < 0 || ny >= C) continue;
-        if (vis[nx][ny] || vis_alpha[board[nx][ny]]) continue;
-        vis_alpha[board[nx][ny]] = 1;
-        dfs(nx, ny, dist + 1);
-        vis_alpha[board[nx][ny]] = 0;
-    }
-}
+string s, target, ans;
 
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    ans = 0;
-    cin >> R >> C;
-    for(int r = 0; r < R; r++) {
-        string s; cin >> s;
-        for(int c = 0; c < C; c++) {
-            board[r][c] = c2i(s[c]);
+    cin >> s >> target;
+    ans = "";
+    for(int i = 0; i < s.size(); i++) {
+        ans += s[i];
+        if (s[i] == target.back()) {
+            string temp = "";
+            bool isCorrect = true;
+            for(int j = target.size() - 1; j >= 0; j--) {
+                if (ans.back() == target[j]) {
+                    temp += ans.back();
+                    ans.pop_back();
+                }
+                else {
+                    isCorrect = false;
+                    break;
+                }
+            }
+            if (!isCorrect) {
+                reverse(temp.begin(), temp.end());
+                ans += temp;
+            }
         }
     }
 
-    vis_alpha[board[0][0]] = 1;
-    dfs(0, 0, 1);
-
-    cout << ans;
+    cout << (ans.empty() ? "FRULA" : ans);
 }   
