@@ -65,6 +65,11 @@ void remove() {
 
 void move() {
     int m_index; cin >> m_index;
+    // 이 방식으로 lis를 진행하게 되면 mountain.back()은 증가하는 수열을 구하기 위해 뒤죽박죽 섞인 상태가 될 것이다.
+    // 10 20 50 5 -> 10 -> 10 20 -> 10 20 50 -> 5 20 50 이렇게 되어있을 텐데, 이는 증가하는 수열은 아니다. 최대 길이만 구할 수 있을 뿐
+    // 따라서 각 증가하는 수열을 구하고 싶다면 index로 뒤로 찾아가야 한다.
+    // 이 문제는 마지막의 front()를 구하고 있는데, 이것은 말이 되는데, 어차피 마지막 값은 vector에 쌓이는 값이 점점 더 작아지기 때문에 값이 쌓이기 때문에
+    // 해당 인덱스의 가장 큰 값은 front()에 있을 것이다.
     cout << (lis_record[m_index - 1] + mountain.size()) * 1'000'000LL + mountain.back().front() << endl;
 }
 
