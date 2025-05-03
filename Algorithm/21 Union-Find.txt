@@ -21,3 +21,9 @@ bool uni(int u, int v) {
     p[u] = v;
     return true;
 }
+
+<시간복잡도>
+최적화 X : find() -> O(N), uni() -> O(N)
+최적화 1 (union by rank) : O(logN)
+최적화 2 (경로 압축) : Amortized O(logN)
+최적화 1 + 최적화 2 : Amortized O(α(N)) -> N <= 2^2^2^65536-3, α(N) <= 4
