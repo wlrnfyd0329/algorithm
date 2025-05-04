@@ -1,6 +1,7 @@
 # 소수 구하기
 
 // 소수 판별시 끝까지 할 필요 없이 루트 n까지만 해보면 된다.
+// 시간복잡도 : O(√N)
 bool isPrime(ll n)
 {
 	if (n < 2) return false;
@@ -11,6 +12,7 @@ bool isPrime(ll n)
 }
 
 // 에라토스테네스 체
+// 시간복잡도 : O(N ln ln N) -> 근데 ln이나 log2나 시간복잡도 개념에서 상수배니까 O(N log log N)으로 표기해도 무방하다
 bool arr[N]; // int는 25만이 한계인데 bool은 1byte니까 100만까지 가능
 
 for(int i=0; i<N; i++) {
@@ -19,17 +21,30 @@ for(int i=0; i<N; i++) {
 
 arr[0] = arr[1] = false;
 
-for(int i=2; i*i<N; i++) {
+// i * i를 이용해서 최적화한 코드
+for(int i=2; i*i<N; i++) { // i * i, 이는 합성수라면 2개의 소수로 이루어져있는데, 
+						   // 이는 √n보다 큰 값을 가진 합성수는 무조건 √n보다 작은 값을 가지기 때문에 '첫 소인수'가 될 수 없다. 
+						   // 이미 더 작은 i에 의해 지워졌을 것이다
     if(arr[i]) {
-        for(int j=i*2; j<=N; j+=i) {
+        for(int j=i*i; j<=N; j+=i) { // i 미만의 수로 인해 i의 작은 배수들은 이미 지워짐
             arr[j] = false;
         }
     }
 }
 
+// 최적화 되지 않은 코드
+for (int i = 2; i <= N; i++) {
+	if (arr[i]) {
+		for (int j = i * 2; j <= N; j += i) {
+			isPrime[j] = false;
+		}
+	}
+}
+
 # 최대 공약수 구하기
 
 // 유클리드 호제법
+// 시간복잡도 : O(logN)
 int Euclidean(int a, int b) {
 	int r = a % b;
 	if (r == 0)
