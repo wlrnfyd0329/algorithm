@@ -1,4 +1,3 @@
-// 투포인터는 누적합으로 값에 음수가 있으면 사용할 수 없다.
 // 따라서 해당 문제는 이분탐색으로 찾아야 한다.
 
 #include <iostream>
@@ -40,9 +39,7 @@ int main() {
     for(int i = 1; i <= m; i++) {
         for(int j = 0; j < i; j++) {
             int diff = t - (b[i] - b[j]);
-            if (binary_search(v.begin(), v.end(), diff)) {
-                ans += upper_bound(v.begin(), v.end(), diff) - lower_bound(v.begin(), v.end(), diff);
-            }
+            ans += upper_bound(v.begin(), v.end(), diff) - lower_bound(v.begin(), v.end(), diff);
         }
     }
 
