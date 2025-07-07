@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "random": "cpp",
+        "deque": "cpp",
+        "iosfwd": "cpp",
+        "array": "cpp",
+        "vector": "cpp",
+        "algorithm": "cpp",
+        "*.tcc": "cpp",
+        "new": "cpp",
+        "bitset": "cpp",
+        "type_traits": "cpp"
+    }
+}
