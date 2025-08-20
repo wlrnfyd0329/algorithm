@@ -22,7 +22,7 @@ int len = 0;
 set<pair<int, int>> s;
 Result taxi[MAX_TAXI];
 
-int distance(int x1, int y1, int x2, int y2)
+inline int distance(int x1, int y1, int x2, int y2)
 {
     return abs(x1 - x2) + abs(y1 - y2);
 }
@@ -37,19 +37,22 @@ void init(int N, int M, int L, int mXs[], int mYs[])
         }
     }
     len = L;
-    for (int i = 0; i < M; i++)
+    s.clear();
+    for (int i = 1; i <= M; i++)
     {
         taxi[i].mMoveDistance = 0;
         taxi[i].mRideDistance = 0;
-        taxi[i].mX = mXs[i];
-        taxi[i].mY = mYs[i];
-        bucket[mXs[i] / L][mYs[i] / L].push_back(i);
+        taxi[i].mX = mXs[i - 1];
+        taxi[i].mY = mYs[i - 1];
+        bucket[mXs[i - 1] / L][mYs[i - 1] / L].push_back(i);
         s.insert({0, i});
     }
     return;
 }
 
 // 30,000
+// 버킷 알고리즘을 사용했을 때, 탐색해야 하는 범위를 잘 생각해야 한다. 3 * 3 범위를 탐색해야 함.
+// 최대의 거리로 돌아다니는 것을 생각하면 된다.
 int pickup(int mSX, int mSY, int mEX, int mEY)
 {
     int dx = mSX / len;
@@ -59,9 +62,9 @@ int pickup(int mSX, int mSY, int mEX, int mEY)
     int buc_y = -1;
     int idx = -1;
     int min_dist = 10000;
-    for (int i = max(0, dx - 1); i < min(10, dx + 1); i++)
+    for (int i = max(0, dx - 1); i <= min(9, dx + 1); i++)
     {
-        for (int j = max(0, dy - 1); j < min(10, dy + 1); j++)
+        for (int j = max(0, dy - 1); j <= min(9, dy + 1); j++)
         {
             for (int k = 0; k < bucket[i][j].size(); k++)
             {
@@ -96,7 +99,7 @@ int pickup(int mSX, int mSY, int mEX, int mEY)
         bucket[mEX / len][mEY / len].push_back(taxi_id);
         s.erase({-taxi[taxi_id].mRideDistance, taxi_id});
         taxi[taxi_id].mRideDistance += distance(mSX, mSY, mEX, mEY);
-        taxi[taxi_id].mMoveDistance += min_dist;
+        taxi[taxi_id].mMoveDistance += min_dist + distance(mSX, mSY, mEX, mEY);
         taxi[taxi_id].mX = mEX;
         taxi[taxi_id].mY = mEY;
         s.insert({-taxi[taxi_id].mRideDistance, taxi_id});
