@@ -6,7 +6,7 @@ vector<int> arr;
 
 int init(int node, int start, int end) {
     if (start == end) {
-        return tree[start] = arr[start];
+        return tree[node] = arr[start];
     }
     int mid = (start + end) >> 1;
     return tree[node] = init(node * 2, start, mid) + init(node * 2 + 1, mid + 1, end);
@@ -49,7 +49,7 @@ vector<int> arr;
 
 int init(int node, int start, int end) {
     if (start == end) {
-        return tree[start] = arr[start];
+        return tree[node] = arr[start];
     }
     int mid = (start + end) >> 1;
     return tree[node] = init(node * 2, start, mid) + init(node * 2 + 1, mid + 1, end);
@@ -80,10 +80,11 @@ void update(int node, int start, int end, int left, int right, int value) {
     if (left <= start && end <= right) {
         lazy[node] += value;
         lazy_update(node, start, end);
+        return;
     }
     int mid = (start + end) >> 1;
-    update(node * 2, start, mid, index, value);
-    update(node * 2 + 1, mid + 1, end, index, value);
+    update(node * 2, start, mid, left, right, value);
+    update(node * 2 + 1, mid + 1, end, left, right, value);
     tree[node] = tree[node * 2] + tree[node * 2 + 1];
 }
 
